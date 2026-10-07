@@ -51,12 +51,12 @@ Standard verification commands:
 - `random.ts`: a `RANDOM` injection token that defaults to `Math.random`.
 
 **Acceptance criteria:**
-- [ ] There are exactly 55 facts with keys `a×b`, `a ≤ b`. `factKey(8, 7) === '7×8'`.
-- [ ] Stage assignment gives 19/15/11/10 facts for stages 1–4.
-- [ ] `applyAnswer` matches every row of the spec's growth table, including flower → wrong → sprout → correct (stays a sprout) → correct (becomes a flower).
+- [x] There are exactly 55 facts with keys `a×b`, `a ≤ b`. `factKey(8, 7) === '7×8'`.
+- [x] Stage assignment gives 19/15/11/10 facts for stages 1–4.
+- [x] `applyAnswer` matches every row of the spec's growth table, including flower → wrong → sprout → correct (stays a sprout) → correct (becomes a flower).
 
 **Verification:**
-- [ ] `npx ng test --watch=false`: the specs in `game/` pass, with ≥ 90% coverage for these files
+- [x] `npx ng test --watch=false`: the specs in `game/` pass, with ≥ 90% coverage for these files
 
 **Dependencies:** T1
 **Files:** `src/app/game/facts.ts`, `facts.spec.ts`, `growth.ts`, `growth.spec.ts`, `src/app/random.ts`
