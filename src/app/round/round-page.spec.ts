@@ -183,15 +183,73 @@ describe('RoundPage', () => {
     expect(bubbles()).toHaveLength(0);
   });
 
-  it('returns to the garden after the 10th problem', async () => {
-    const { render, answer, next, harness } = await setup();
+  it('shows the summary after the 10th problem and can start another round', async () => {
+    const { el, render, answer, next, progressText, harness } = await setup();
     for (let i = 0; i < 10; i++) {
       answer(false);
       next()!.click();
       render();
     }
     await harness.fixture.whenStable();
+    expect(el.querySelector('app-round-summary')).not.toBeNull();
+    expect(el.querySelector('app-answer-bubbles, app-number-pad')).toBeNull();
+
+    el.querySelector<HTMLButtonElement>('button.again')!.click();
+    render();
+    expect(el.querySelector('app-round-summary')).toBeNull();
+    expect(progressText()).toBe('Zadanie 1 z 10');
+  });
+
+  it('counts each plant once, by its level at the end of the round', async () => {
+    const { el, render, answer, harness } = await setup();
+    const store = TestBed.inject(ProgressStore);
+    vi.useFakeTimers();
+    for (let i = 0; i < 10; i++) {
+      answer(true);
+      vi.advanceTimersByTime(AUTO_ADVANCE_MS);
+      render();
+    }
+    vi.useRealTimers();
+    await harness.fixture.whenStable();
+    const grown = store.unlockedFacts().filter((f) => store.factProgress(f.key).attempts > 0);
+    const flowers = grown.filter((f) => store.factProgress(f.key).level === 'flower').length;
+    const sprouts = grown.length - flowers;
+    const text = el.querySelector('app-round-summary')!.textContent!;
+    expect(text).toContain(`Nowe kwiatki: ${flowers}`);
+    expect(text).toContain(`Nowe kiełki: ${sprouts}`);
+  });
+
+  it('opens the next garden beds when a finished round reaches 80%', async () => {
+    const almost = (store: ProgressStore) =>
+      store
+        .unlockedFacts()
+        .slice(0, 15)
+        .forEach((f) => store.recordAnswer(f.key, true)); // 79%
+    const { el, render, answer, harness } = await setup(almost);
+    const store = TestBed.inject(ProgressStore);
+    vi.useFakeTimers();
+    for (let i = 0; i < 10; i++) {
+      answer(true);
+      vi.advanceTimersByTime(AUTO_ADVANCE_MS);
+      render();
+    }
+    vi.useRealTimers();
+    await harness.fixture.whenStable();
+    expect(store.unlockedStage()).toBe(2);
+    expect(el.querySelector('app-round-summary')!.textContent).toContain('Nowe grządki!');
+  });
+
+  it('does not open new beds when the round is left early', async () => {
+    const ready = (store: ProgressStore) =>
+      store
+        .unlockedFacts()
+        .slice(0, 16)
+        .forEach((f) => store.recordAnswer(f.key, true)); // 84%
+    const { el, harness } = await setup(ready);
+    el.querySelector<HTMLAnchorElement>('a.leave')!.click();
+    await harness.fixture.whenStable();
     expect(TestBed.inject(Router).url).toBe('/');
+    expect(TestBed.inject(ProgressStore).unlockedStage()).toBe(1);
   });
 
   it('has a way back to the garden at any time', async () => {

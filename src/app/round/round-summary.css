@@ -1,0 +1,76 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.grown {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.unlocked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--action);
+}
+
+.tables {
+  word-spacing: 0.75rem;
+  font-size: 2rem;
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.again,
+.garden {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 4rem;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.again {
+  border: 0;
+  background: var(--action);
+  color: var(--on-action);
+}
+
+.again:hover {
+  background: var(--action-hover);
+}
+
+.garden {
+  border: 3px solid var(--text);
+  background: #ffffff;
+  color: var(--text);
+}
+
+.garden:hover {
+  background: var(--bubble-hover);
+}

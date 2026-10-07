@@ -59,11 +59,11 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Task 7: Round with answer bubbles
 - [x] Task 8: Number pad
 - [x] Task 9: Wrong-answer feedback (dot array, Dalej)
-- [ ] Task 10: Round summary and stage unlock
+- [x] Task 10: Round summary and stage unlock
 
 ### Checkpoint B: Playable MVP and child playtest
-- [ ] A full loop works in the browser: garden → round → summary → garden. Progress survives a reload.
-- [ ] Success criteria 1–7 from the spec are met
+- [x] A full loop works in the browser: garden → round → summary → garden. Progress survives a reload.
+- [x] Success criteria 1–7 from the spec are met
 - [ ] **Child playtest:** hand over without explaining anything and observe (assumptions from the idea doc)
 - [ ] Human review: adjust the tuning constants or rules before polishing
 

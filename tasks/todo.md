@@ -193,20 +193,20 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Description:** Build `RoundSummary`, shown after problem 10. It shows the plants that grew ("+N 🌸", "+N 🌿"). The unlock check `unlockNextStageIfReady()` runs at the end of the round (not when the round is left with ✕), and "Nowe grządki!" appears with the new tables. **▶ Jeszcze raz** is focused by default; **🌱 Ogród** goes back to the garden.
 
 **Acceptance criteria:**
-- [ ] The growth counts in the summary match the changes in the round
-- [ ] The unlock happens only at the end of a full round, at most one stage, at ≥ 80%. The new beds then appear as seeds in the garden.
-- [ ] Jeszcze raz starts a new round; Ogród goes to the garden; axe reports 0 violations
+- [x] The growth counts in the summary match the changes in the round
+- [x] The unlock happens only at the end of a full round, at most one stage, at ≥ 80%. The new beds then appear as seeds in the garden.
+- [x] Jeszcze raz starts a new round; Ogród goes to the garden; axe reports 0 violations
 
 **Verification:**
-- [ ] `npx ng test --watch=false` passes
-- [ ] Manual: seed the progress so stage 1 is at 79% and then 80%; play a round; check that the unlock happens and the garden updates
+- [x] `npx ng test --watch=false` passes
+- [x] Manual: seed the progress so stage 1 is at 79% and then 80%; play a round; check that the unlock happens and the garden updates
 
 **Dependencies:** T9
 **Files:** `src/app/round/round-summary.ts`, `round-summary.spec.ts`, `round-page.ts`, `round-page.spec.ts`
 **Scope:** S
 
 ### ◆ Checkpoint B: Playable MVP and child playtest
-- [ ] Tests, lint and build are green; success criteria 1–7 are met
+- [x] Tests, lint and build are green; success criteria 1–7 are met
 - [ ] Decide how the tablet opens the app (plan.md, Open Question 1)
 - [ ] Child playtest: no explanation, observe silently, note where they get stuck
 - [ ] Human review: adjust the constants or rules (spec update first) before Phase 3

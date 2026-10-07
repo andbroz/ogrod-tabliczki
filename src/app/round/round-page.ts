@@ -9,54 +9,73 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { answerOptions } from '../game/distractors';
-import { AUTO_ADVANCE_MS, ROUND_LENGTH } from '../game/facts';
-import { buildRound, insertRetry } from '../game/round-builder';
+import { AUTO_ADVANCE_MS, FactKey, ROUND_LENGTH } from '../game/facts';
+import { Level } from '../game/growth';
+import { buildRound, insertRetry, Problem } from '../game/round-builder';
 import { ProgressStore } from '../progress/progress-store';
 import { RANDOM } from '../random';
 import { AnswerBubbles } from './answer-bubbles';
 import { DotArray } from './dot-array';
 import { NumberPad } from './number-pad';
+import { RoundSummary } from './round-summary';
 
 interface Feedback {
   readonly correct: boolean;
 }
 
+interface Summary {
+  readonly sprouts: number;
+  readonly flowers: number;
+  readonly unlockedTables: readonly number[] | null;
+}
+
+const LEVEL_RANK: Record<Level, number> = { seed: 0, sprout: 1, flower: 2 };
+
 @Component({
   selector: 'app-round-page',
-  imports: [AnswerBubbles, DotArray, NumberPad, RouterLink],
+  imports: [AnswerBubbles, DotArray, NumberPad, RoundSummary, RouterLink],
   styleUrl: './round-page.css',
   template: `
-    <header class="top">
-      <a class="leave" routerLink="/" aria-label="Wróć do ogrodu">✕</a>
-      <ol class="dots" aria-hidden="true">
-        @for (n of dots; track n) {
-          <li [class.done]="n < index()" [class.current]="n === index()"></li>
-        }
-      </ol>
-      <p class="progress-label visually-hidden">Zadanie {{ index() + 1 }} z {{ dots.length }}</p>
-    </header>
-
-    <h1 class="problem">{{ problem().left }} × {{ problem().right }} = ?</h1>
-
-    @if (feedback(); as f) {
-      <div class="feedback" [class.correct]="f.correct">
-        @if (f.correct) {
-          <p class="verdict"><span aria-hidden="true">✔</span> Brawo!</p>
-        } @else {
-          <p class="verdict">Prawie!</p>
-          <p class="solution">{{ problem().left }} × {{ problem().right }} = {{ product() }}</p>
-          <app-dot-array [rows]="problem().left" [cols]="problem().right" />
-          <button #next type="button" class="next" (click)="advance()">
-            Dalej <span aria-hidden="true">➜</span>
-          </button>
-        }
-      </div>
-    } @else if (usePad()) {
-      <app-number-pad (submitted)="answer($event)" />
+    @if (summary(); as s) {
+      <app-round-summary
+        [sprouts]="s.sprouts"
+        [flowers]="s.flowers"
+        [unlockedTables]="s.unlockedTables"
+        (again)="start()"
+      />
     } @else {
-      <app-answer-bubbles [options]="options()" (picked)="answer($event)" />
+      <header class="top">
+        <a class="leave" routerLink="/" aria-label="Wróć do ogrodu">✕</a>
+        <ol class="dots" aria-hidden="true">
+          @for (n of dots; track n) {
+            <li [class.done]="n < index()" [class.current]="n === index()"></li>
+          }
+        </ol>
+        <p class="progress-label visually-hidden">Zadanie {{ index() + 1 }} z {{ dots.length }}</p>
+      </header>
+
+      <h1 class="problem">{{ problem().left }} × {{ problem().right }} = ?</h1>
+
+      @if (feedback(); as f) {
+        <div class="feedback" [class.correct]="f.correct">
+          @if (f.correct) {
+            <p class="verdict"><span aria-hidden="true">✔</span> Brawo!</p>
+          } @else {
+            <p class="verdict">Prawie!</p>
+            <p class="solution">{{ problem().left }} × {{ problem().right }} = {{ product() }}</p>
+            <app-dot-array [rows]="problem().left" [cols]="problem().right" />
+            <button #next type="button" class="next" (click)="advance()">
+              Dalej <span aria-hidden="true">➜</span>
+            </button>
+          }
+        </div>
+      } @else if (usePad()) {
+        <app-number-pad (submitted)="answer($event)" />
+      } @else {
+        <app-answer-bubbles [options]="options()" (picked)="answer($event)" />
+      }
     }
 
     <p class="visually-hidden" aria-live="polite">{{ announcement() }}</p>
@@ -65,22 +84,15 @@ interface Feedback {
 export class RoundPage {
   private readonly store = inject(ProgressStore);
   private readonly random = inject(RANDOM);
-  private readonly router = inject(Router);
   private readonly injector = inject(Injector);
 
   protected readonly dots = Array.from({ length: ROUND_LENGTH }, (_, i) => i);
-  private readonly round = signal(
-    buildRound(
-      {
-        unlockedFacts: this.store.unlockedFacts(),
-        progress: (key) => this.store.factProgress(key),
-        zeroRuleCorrect: this.store.zeroRuleCorrect(),
-      },
-      this.random,
-    ),
-  );
+  private readonly round = signal<readonly Problem[]>([]);
+  /** Level of each fact in the round when it started, to report what grew. */
+  private startLevels = new Map<FactKey, Level>();
   protected readonly index = signal(0);
   protected readonly feedback = signal<Feedback | null>(null);
+  protected readonly summary = signal<Summary | null>(null);
   protected readonly problem = computed(() => this.round()[this.index()]);
   protected readonly product = computed(() => this.problem().left * this.problem().right);
   /** Seeds are answered with bubbles; sprouts, flowers and the ×0 rule are typed. */
@@ -105,6 +117,27 @@ export class RoundPage {
 
   constructor() {
     inject(DestroyRef).onDestroy(() => clearTimeout(this.timer));
+    this.start();
+  }
+
+  protected start(): void {
+    const round = buildRound(
+      {
+        unlockedFacts: this.store.unlockedFacts(),
+        progress: (key) => this.store.factProgress(key),
+        zeroRuleCorrect: this.store.zeroRuleCorrect(),
+      },
+      this.random,
+    );
+    this.startLevels = new Map(
+      round.flatMap((p) =>
+        p.kind === 'fact' ? [[p.key, this.store.factProgress(p.key).level]] : [],
+      ),
+    );
+    this.round.set(round);
+    this.index.set(0);
+    this.feedback.set(null);
+    this.summary.set(null);
     this.focusAfterRender(() => this.focusInput());
   }
 
@@ -127,12 +160,24 @@ export class RoundPage {
   protected advance(): void {
     clearTimeout(this.timer);
     if (this.index() === this.round().length - 1) {
-      void this.router.navigateByUrl('/');
+      this.finish();
       return;
     }
     this.index.update((i) => i + 1);
     this.feedback.set(null);
     this.focusAfterRender(() => this.focusInput());
+  }
+
+  private finish(): void {
+    let sprouts = 0;
+    let flowers = 0;
+    for (const [key, before] of this.startLevels) {
+      const after = this.store.factProgress(key).level;
+      if (LEVEL_RANK[after] <= LEVEL_RANK[before]) continue;
+      if (after === 'flower') flowers++;
+      else sprouts++;
+    }
+    this.summary.set({ sprouts, flowers, unlockedTables: this.store.unlockNextStageIfReady() });
   }
 
   private focusInput(): void {
