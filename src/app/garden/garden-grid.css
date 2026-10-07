@@ -1,9 +1,12 @@
 :host {
   display: block;
-  /* Stacked layout: leave room for the heading, counter and Graj button so the garden fits the
-     screen height (10 rows ≈ 10/11 of the width, ~17rem for everything else).
+  /* Stacked layout: leave room for the stage padding plus the heading, counter and Graj button
+     (~15rem) so the garden fits the screen height (10 rows ≈ 10/11 of the width).
      The garden page overrides this for wide landscape screens. */
-  width: var(--garden-width, min(100%, clamp(16rem, calc((100dvh - 17rem) * 1.1), 40rem)));
+  width: var(
+    --garden-width,
+    min(100%, clamp(16rem, calc((100dvh - 15rem - var(--stage-inset-block)) * 1.1), 40rem))
+  );
   margin-inline: auto;
 }
 

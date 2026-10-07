@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   max-width: 34rem;
   margin-inline: auto;
 }
@@ -57,9 +57,20 @@
 }
 
 .problem {
-  margin: 1rem 0 0;
+  margin: 0;
   font-size: 3.5rem;
+  line-height: 1.2;
   font-variant-numeric: tabular-nums;
+}
+
+/* Tall enough for the tallest state (number pad, or a 10-row dot array), so the question line
+   above it stays in place while the answer area changes. */
+.answer-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 26rem;
 }
 
 .feedback {

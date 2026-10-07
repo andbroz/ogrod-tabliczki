@@ -58,24 +58,26 @@ const LEVEL_RANK: Record<Level, number> = { seed: 0, sprout: 1, flower: 2 };
 
       <h1 class="problem">{{ problem().left }} × {{ problem().right }} = ?</h1>
 
-      @if (feedback(); as f) {
-        <div class="feedback" [class.correct]="f.correct">
-          @if (f.correct) {
-            <p class="verdict"><span aria-hidden="true">✔</span> Brawo!</p>
-          } @else {
-            <p class="verdict">Prawie!</p>
-            <p class="solution">{{ problem().left }} × {{ problem().right }} = {{ product() }}</p>
-            <app-dot-array [rows]="problem().left" [cols]="problem().right" />
-            <button #next type="button" class="next" (click)="advance()">
-              Dalej <span aria-hidden="true">➜</span>
-            </button>
-          }
-        </div>
-      } @else if (usePad()) {
-        <app-number-pad (submitted)="answer($event)" />
-      } @else {
-        <app-answer-bubbles [options]="options()" (picked)="answer($event)" />
-      }
+      <div class="answer-area">
+        @if (feedback(); as f) {
+          <div class="feedback" [class.correct]="f.correct">
+            @if (f.correct) {
+              <p class="verdict"><span aria-hidden="true">✔</span> Brawo!</p>
+            } @else {
+              <p class="verdict">Prawie!</p>
+              <p class="solution">{{ problem().left }} × {{ problem().right }} = {{ product() }}</p>
+              <app-dot-array [rows]="problem().left" [cols]="problem().right" />
+              <button #next type="button" class="next" (click)="advance()">
+                Dalej <span aria-hidden="true">➜</span>
+              </button>
+            }
+          </div>
+        } @else if (usePad()) {
+          <app-number-pad (submitted)="answer($event)" />
+        } @else {
+          <app-answer-bubbles [options]="options()" (picked)="answer($event)" />
+        }
+      </div>
     }
 
     <p class="visually-hidden" aria-live="polite">{{ announcement() }}</p>

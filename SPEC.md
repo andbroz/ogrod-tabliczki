@@ -141,6 +141,7 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - **Touch:** interactive targets ≥ 48×48 CSS px; answer bubbles and number pad keys ≥ 64×64 CSS px.
 - **Layout:** works from 360 px (phone portrait) up to desktop; usable on tablet in both portrait and landscape.
 - **Responsive scale:** the UI grows with the screen. The root font size scales with the viewport (100% of the browser default on phones, up to 175% on large desktops) and all sizes are in `rem`. On wide landscape screens (≥ 48rem) the garden shows the title, counter and Graj next to the grid, and a wrong answer shows the dot array next to the solution. The garden (grid + Graj) and every round screen fit without vertical scrolling at 1024×768 and larger.
+- **Centred stage:** every screen is centred horizontally and vertically in the window, with a fluid margin (about 16 px on phones up to about 48 px on desktops) plus the device safe-area insets (`viewport-fit=cover`). Screens taller than the window start at the top and scroll, and are never cut off. On the round screen the question line doesn't move between the question, pad, correct and wrong states. See [docs/ideas/centred-stage.md](docs/ideas/centred-stage.md).
 - **Offline:** after one online visit to a production build, the app loads and plays fully offline.
 - **Privacy:** no network requests except the app's own static assets; no analytics, third-party fonts or CDNs.
 - **Performance:** the production initial bundle stays within the existing budget (warning at 500 kB); each SVG plant is ≤ 4 kB.

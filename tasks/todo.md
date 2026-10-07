@@ -221,6 +221,22 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Files:** `src/styles.css`, `src/app/garden/garden-grid.css`, `src/app/garden/garden-page.css`, `src/app/round/round-page.css`
 **Scope:** S (side-by-side layouts on wide landscape screens were needed: a stacked garden is height-limited)
 
+## Task 10b: Centred stage
+**Description:** Make `<main>` a centred stage with fluid, safe-area-aware padding (`--stage-pad`) and safe vertical centring. Update the garden size formulas to subtract the stage padding, keep the round's answer area at a stable height, and remove the per-page centring and padding that this makes redundant. Idea: [docs/ideas/centred-stage.md](../docs/ideas/centred-stage.md).
+
+**Acceptance criteria:**
+- [x] Content is centred in both directions at 360×780, 768×1024, 1024×768, 1440×900 and 1920×1080, and every interactive element is ≥ 16 px from the window edge
+- [x] The question line moves by less than 2 px between the question, pad, correct and wrong states
+- [x] At 740×360 the top of every screen is reachable; no new scrolling at ≥ 1024×768 and no horizontal scroll at 360 px
+
+**Verification:**
+- [x] `npx ng test --watch=false`, `npx ng lint`, `npm run build`
+- [x] Manual (browser MCP): measure the gaps around the content and the question position at every size, plus screenshots
+
+**Dependencies:** T10a
+**Files:** `src/index.html`, `src/styles.css`, `src/app/garden/garden-grid.css`, `src/app/garden/garden-page.css`, `src/app/round/round-page.{ts,css}`
+**Scope:** S
+
 ### ◆ Checkpoint B: Playable MVP and child playtest
 - [x] Tests, lint and build are green; success criteria 1–7 are met
 - [ ] Decide how the tablet opens the app (plan.md, Open Question 1)

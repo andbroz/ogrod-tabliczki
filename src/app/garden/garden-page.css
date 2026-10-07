@@ -52,8 +52,11 @@ h1 {
     align-items: center;
     column-gap: 3rem;
     row-gap: 1.5rem;
-    min-height: calc(100dvh - 2rem);
-    --garden-width: min(calc((100dvh - 4rem) * 1.1), calc(100vw - 24rem));
+    /* Height: the stage padding plus the column headers (~2rem). Width: the left column and gap. */
+    --garden-width: min(
+      calc((100dvh - 2rem - var(--stage-inset-block)) * 1.1),
+      calc(100vw - 23rem - var(--stage-inset-inline))
+    );
   }
 
   h1 {

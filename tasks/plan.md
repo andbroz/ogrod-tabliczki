@@ -61,6 +61,7 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Task 9: Wrong-answer feedback (dot array, Dalej)
 - [x] Task 10: Round summary and stage unlock
 - [x] Task 10a: Responsive scale (from the playtest)
+- [x] Task 10b: Centred stage
 
 ### Checkpoint B: Playable MVP and child playtest
 - [x] A full loop works in the browser: garden → round → summary → garden. Progress survives a reload.

@@ -16,6 +16,16 @@
   --wrong: #9a3b00;
   --bubble-hover: #f1e6cc;
 
+  /* Breathing room around the game: ~16 px on phones up to ~48 px on desktops,
+     plus the device safe areas (notch, rounded corners, home bar). */
+  --stage-pad: clamp(1rem, 4vmin, 3rem);
+  --stage-inset-block: calc(
+    2 * var(--stage-pad) + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px)
+  );
+  --stage-inset-inline: calc(
+    2 * var(--stage-pad) + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px)
+  );
+
   color-scheme: light;
   font-family:
     system-ui,
@@ -37,8 +47,26 @@ body {
   margin: 0;
 }
 
+/* The stage: fills the window and centres the current screen in both directions.
+   Auto margins centre only when there's room, so a screen taller than the window
+   starts at the top and scrolls instead of being cut off. */
 main {
-  padding: 1rem 0.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: calc(var(--stage-pad) + env(safe-area-inset-top, 0px))
+    calc(var(--stage-pad) + env(safe-area-inset-right, 0px))
+    calc(var(--stage-pad) + env(safe-area-inset-bottom, 0px))
+    calc(var(--stage-pad) + env(safe-area-inset-left, 0px));
+}
+
+main > router-outlet {
+  display: none;
+}
+
+main > :not(router-outlet) {
+  margin-block: auto;
 }
 
 :focus-visible {
