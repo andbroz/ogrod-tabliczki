@@ -118,16 +118,16 @@ The store saves to `localStorage` key `ogrod-tabliczki:v1` after every change.
 - `insertRetry(round, index)`, which re-queues a wrongly answered fact 2–3 slots later
 
 **Acceptance criteria:**
-- [ ] Distractors: for all 55 facts there are always exactly 2, distinct, ≥ 0 and never equal to the correct product
-- [ ] The round invariants hold over 1000 seeded runs:
+- [x] Distractors: for all 55 facts there are always exactly 2, distinct, ≥ 0 and never equal to the correct product
+- [x] The round invariants hold over 1000 seeded runs:
   - exactly 10 problems, all from unlocked facts
-  - ≤ 3 never-attempted facts
+  - ≤ 3 never-attempted facts while other candidates exist (soft limit); a fresh garden still gets 10 problems
   - no fact twice in a row, and ≤ 2 appearances per fact
   - a ×0 slot whenever `zeroRuleCorrect < 3`, and about 1/3 of rounds after that
-- [ ] The retry lands 2–3 slots later only if room remains, at most once per fact, and the round stays at 10 problems
+- [x] The retry lands 2–3 slots later only if room remains, at most once per fact, never replaces ×0, never back to back, respects ≤ 2 per fact, and the round stays at 10 problems
 
 **Verification:**
-- [ ] `npx ng test --watch=false`: the specs pass; `game/` coverage is ≥ 90%
+- [x] `npx ng test --watch=false`: the specs pass; `game/` coverage is ≥ 90%
 
 **Dependencies:** T3
 **Files:** `src/app/game/distractors.ts`, `distractors.spec.ts`, `round-builder.ts`, `round-builder.spec.ts`
