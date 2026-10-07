@@ -1,0 +1,69 @@
+:host {
+  display: block;
+  width: min(100%, 34rem);
+  margin-inline: auto;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+th {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+td {
+  position: relative;
+  padding: 0;
+  border-radius: 4px;
+  background: var(--soil);
+}
+
+/* aspect-ratio doesn't apply to table cells; this spacer keeps them square. */
+td::after {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+
+/* Placeholder shapes until the SVG art (Task 12); each state has its own shape. */
+td::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+td.seed::before {
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: var(--seed);
+}
+
+td.sprout::before {
+  width: 22%;
+  height: 70%;
+  border-radius: 999px;
+  background: var(--sprout);
+}
+
+td.flower::before {
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--flower-center) 0 28%, var(--flower) 30%);
+}
+
+td.locked {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--soil-covered) 0 4px,
+    var(--soil-covered-stripe) 4px 8px
+  );
+}

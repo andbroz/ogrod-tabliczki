@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.counter {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.play {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 4rem;
+  padding: 0 2.5rem;
+  border-radius: 999px;
+  background: var(--action);
+  color: var(--on-action);
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.play:hover {
+  background: var(--action-hover);
+}

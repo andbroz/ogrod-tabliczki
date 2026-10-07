@@ -99,13 +99,13 @@ The store saves to `localStorage` key `ogrod-tabliczki:v1` after every change.
 - a **▶ Graj** button, with initial focus, that links to `/graj`
 
 **Acceptance criteria:**
-- [ ] With a fresh state: 36 seed cells and 64 locked cells; the counter reads 0 / 55. Mirrored cells (3×7 and 7×3) share the same state.
-- [ ] The cells are not focusable. Screen-reader labels match the spec. The Graj button is focused on load.
-- [ ] axe helper: 0 violations
+- [x] With a fresh state: 36 seed cells and 64 locked cells; the counter reads 0 / 55. Mirrored cells (3×7 and 7×3) share the same state.
+- [x] The cells are not focusable. Screen-reader labels match the spec. The Graj button is focused on load.
+- [x] axe helper: 0 violations
 
 **Verification:**
-- [ ] `npx ng test --watch=false`: the garden specs pass
-- [ ] Manual (browser MCP): screenshot at 360 px and at desktop width; no horizontal scroll
+- [x] `npx ng test --watch=false`: the garden specs pass
+- [x] Manual (browser MCP): screenshot at 360 px and at desktop width; no horizontal scroll
 
 **Dependencies:** T4
 **Files:** `src/app/garden/garden-page.ts`, `garden-grid.ts`, `garden-grid.css`, `garden-grid.spec.ts`, `src/styles.css`

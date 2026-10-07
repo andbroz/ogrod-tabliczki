@@ -54,7 +54,7 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 
 ### Phase 2: Playable Loop
 - [x] Task 4: Progress store with persistence
-- [ ] Task 5: Garden screen (plain grid)
+- [x] Task 5: Garden screen (plain grid)
 - [ ] Task 6: Round builder and distractors
 - [ ] Task 7: Round with answer bubbles
 - [ ] Task 8: Number pad
