@@ -64,9 +64,9 @@ A fact belongs to the first stage that contains **either** of its factors.
 ### Round composition (10 problems)
 1. Candidates are the facts in the unlocked stages.
 2. Weighted random pick, with weights `seed` = 3, `sprout` = 3, `flower` = 1, so flowers come back as review.
-3. A round introduces at most **3 never-attempted facts**.
+3. A round introduces at most **3 never-attempted facts** while other candidates remain. This is a soft limit: when only never-attempted facts are left (e.g. the very first round), more are added so the round still has 10 problems.
 4. The same fact never appears twice in a row and appears at most twice per round.
-5. **Retry of mistakes:** a fact answered wrong is asked again **once**, 2–3 problems later in the same round, if slots remain. The retry uses the normal growth rules and input mode, and it replaces a regular pick, so the round stays at 10.
+5. **Retry of mistakes:** a fact answered wrong is asked again **once**, 2–3 problems later in the same round, if slots remain. The retry uses the normal growth rules and input mode, and it replaces a regular pick, so the round stays at 10. A retry never replaces the ×0 problem, never puts the same fact back to back, and respects the limit of 2 appearances per fact.
 6. **×0 rule problem:** `n × 0` or `0 × n` with `n` from 1 to 10, answered on the number pad.
    - It's included in 1 slot per round until the child has answered 3 ×0 problems correctly in total.
    - After that, it's included with a probability of 1/3 per round.
