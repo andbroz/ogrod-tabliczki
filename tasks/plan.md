@@ -75,7 +75,7 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Task 11: Reset dialog
 - [x] Task 12: SVG garden art and grow animation
 - [x] Task 13: PWA offline support
-- [ ] Task 14: Final accessibility and responsive pass
+- [x] Task 14: Final accessibility and responsive pass
 - [x] Task 15: Publish on GitHub Pages (live; real-tablet check pending)
 
 ### Checkpoint C: Complete

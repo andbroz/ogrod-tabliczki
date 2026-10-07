@@ -314,18 +314,24 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Description:** Verify every success criterion in the spec end-to-end, and fix any gaps that turn up.
 
 **Acceptance criteria:**
-- [ ] AXE (in the browser) reports 0 violations on the garden, the round (question, correct and wrong states), the summary and the reset dialog. Lighthouse accessibility is 100.
-- [ ] A keyboard-only playthrough of a full loop works. No horizontal scroll at 360 px. Tablet portrait and landscape are usable.
-- [ ] All 12 success criteria in the spec are checked off, and `game/` coverage is ≥ 90%
-- [ ] Focus isn't lost while the "Brawo!" feedback is shown (noticed in T7: the bubbles are removed, so focus falls to `body` for ~1.2 s)
+- [x] AXE (in the browser) reports 0 violations on the garden, the round (question, correct and wrong states), the summary and the reset dialog. Lighthouse accessibility is 100.
+- [x] A keyboard-only playthrough of a full loop works. No horizontal scroll at 360 px. Tablet portrait and landscape are usable.
+- [x] All 12 success criteria in the spec are checked off, and `game/` coverage is ≥ 90%
+- [x] Focus isn't lost while the "Brawo!" feedback is shown (noticed in T7: the bubbles are removed, so focus falls to `body` for ~1.2 s)
 
 **Verification:**
-- [ ] `npx ng test --watch=false --coverage`, `npx ng lint` and `npm run build`
-- [ ] Manual (browser MCP): screenshots at 360 px, 768 px portrait and landscape, and desktop
+- [x] `npx ng test --watch=false --coverage`, `npx ng lint` and `npm run build`
+- [x] Manual (browser MCP): screenshots at 360 px, 768 px portrait and landscape, and desktop
 
 **Dependencies:** T1–T13
 **Files:** fixes only, as needed
 **Scope:** S–M
+**Outcome (2026-10-07):**
+- Fixed: after a correct answer, focus now rests on the "Brawo!" feedback (`tabindex="-1"`) instead of falling to `body`. Reproduction test added.
+- axe-core in Chrome, all rules including colour contrast: 0 violations on the garden, question (bubbles and pad), correct, wrong, summary and reset dialog. Lighthouse accessibility 100 on `/` (mobile) and `/graj` (desktop).
+- Keyboard only: Graj → bubbles by Tab/Enter, pad by typing, Dalej by Enter, summary → Ogród, ⚙ → type USUŃ → Enter. Focus is never on `body`, and returns to ⚙ after the reset.
+- Sizes 360×780, 768×1024, 1024×768, 1280×800, 1440×900, 1920×1080, with a stage-4 garden and a wrong answer on an 8–10 row fact (the tallest dot array): no horizontal or vertical scroll, at least 16 px from every edge. Phone landscape (740×360, not a target) scrolls vertically with nothing cut off.
+- Coverage: `app/game` 97.9% statements, 96.8% branches; 141 tests; lint and build clean.
 
 ## Task 15: Publish on GitHub Pages
 **Description:** Create the GitHub repository (name, visibility and account confirmed by the owner first), push the branch, and publish the production build to GitHub Pages with the repository base href and a `404.html` fallback.
@@ -346,5 +352,5 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Scope:** S
 
 ### ◆ Checkpoint C: Complete
-- [ ] All spec success criteria are met
+- [x] All spec success criteria are met (verified in Task 14; offline on the real tablet in Task 15)
 - [ ] Human review
