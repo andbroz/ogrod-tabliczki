@@ -239,7 +239,7 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 
 ### ◆ Checkpoint B: Playable MVP and child playtest
 - [x] Tests, lint and build are green; success criteria 1–7 are met
-- [ ] Decide how the tablet opens the app (plan.md, Open Question 1)
+- [x] Decide how the tablet opens the app (plan.md, Open Question 1): installed from GitHub Pages to the home screen (Task 15)
 - [x] Child playtest: no explanation, observe silently, note where they get stuck
   - 2026-10-07: the kids played without questions and chose **Jeszcze raz** on their own. Feedback: the desktop view is too small → responsive scaling (Task 10a).
 - [ ] Human review: adjust the constants or rules (spec update first) before Phase 3
@@ -332,12 +332,12 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 
 **Acceptance criteria:**
 - [x] The live HTTPS URL loads the garden; `/<repo>/graj` deep link works (https://andbroz.github.io/ogrod-tabliczki/)
-- [ ] After one online visit on the tablet, the app installs and plays a full round offline (verified offline in desktop Chrome; real tablet check pending)
+- [x] After one online visit on the tablet, the app installs and plays a full round offline (desktop Chrome and the real tablet)
 - [x] Only same-origin requests on the live site
 
 **Verification:**
 - [x] Manual (browser MCP) on the live URL: load, deep link, offline reload, network panel
-- [ ] On the real tablet: add to home screen, go offline, play
+- [x] On the real tablet: add to home screen, go offline, play (2026-10-07: installs, all SVGs render, playable in airplane mode)
 
 **Dependencies:** T13 (and T14)
 **Note:** `<meta name="description">` added (the only failing Lighthouse SEO audit, found in T12).
