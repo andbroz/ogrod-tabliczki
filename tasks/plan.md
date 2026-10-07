@@ -71,10 +71,12 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [ ] Human review: adjust the tuning constants or rules before polishing
 
 ### Phase 3: Polish and Ship-Readiness
+- [x] Task 10c: Encouragement when nothing grew
 - [ ] Task 11: Reset dialog
 - [ ] Task 12: SVG garden art and grow animation
 - [ ] Task 13: PWA offline support
 - [ ] Task 14: Final accessibility and responsive pass
+- [ ] Task 15: Publish on GitHub Pages
 
 ### Checkpoint C: Complete
 - [ ] All 12 success criteria in the spec are met
@@ -97,11 +99,8 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 | axe in jsdom misses contrast and layout issues | Med | Lighthouse and screenshots in a real browser (T12, T14) |
 | A cached service worker serves a stale version after an update | Med | Use the Angular SW defaults and check for an update on load; document "reload twice" for the parent |
 | The child isn't motivated by the grid (the core bet) | High | Checkpoint B playtest before investing in art and polish |
-| The child's tablet can't reach the app | High | See Open Question 1; must be decided before Checkpoint B |
+| The child's tablet can't reach the app | High | Decided: GitHub Pages (Task 15) |
+| GitHub Pages serves the app from a sub-path (`/<repo>/`) and has no SPA fallback | Med | Build with `--base-href /<repo>/`, add `404.html`; verify `/graj` deep link and the service worker scope on the live URL |
 
 ## Open Questions
-1. **How will the child's tablet open the app?** The spec doesn't cover this, and it's needed for the playtest at Checkpoint B. Options:
-   - (a) `ng serve --host 0.0.0.0` on your laptop, opened on the tablet over home Wi-Fi. This is enough for the playtest, but there's no offline support and it only works on the same network.
-   - (b) Static hosting (e.g. GitHub Pages or Netlify). This gives a real HTTPS install, so PWA and offline work on the tablet. It's a separate deployment step outside this plan, and it publishes the app. It may also need approval under company policy for personal projects on corporate accounts.
-
-   Recommendation: (a) for Checkpoint B, then decide on (b) before Task 13.
+1. ~~How will the child's tablet open the app?~~ **Decided (2026-10-07):** GitHub Pages static hosting over HTTPS, so the PWA installs and plays offline on the tablet. Added as Task 15. The repository name, visibility and account still need confirming before the first push.

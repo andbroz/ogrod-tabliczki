@@ -109,7 +109,7 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - **Leaving:** a small ✕ button leaves the round and returns to the garden. Answers already given are kept; the unlock check is skipped.
 
 ### Round summary (inside the round route)
-- The plants that grew in this round, as icons and counts (e.g. "+3 🌸", "+2 🌿").
+- The plants that grew in this round, as icons and counts (e.g. "+3 🌸", "+2 🌿"). When nothing grew, a short encouragement instead: "🌱 Próbuj dalej!".
 - If a stage unlocked: "Nowe grządki!" with the new tables (e.g. "×3 ×4").
 - Buttons: **▶ Jeszcze raz** (a new round, focused by default) and **🌱 Ogród**.
 
@@ -129,7 +129,7 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - If `localStorage` is unavailable, the game runs in memory and doesn't crash.
 
 ### Copy (complete MVP list)
-`Graj`, `Jeszcze raz`, `Ogród`, `Dalej`, `Brawo!`, `Prawie!`, `Nowe grządki!`, `Zadanie N z 10`, `Wyczyścić cały ogród?`, `Wpisz USUŃ, aby potwierdzić`, `Wyczyść`, `Anuluj`, the accessible names `Wróć do ogrodu`, `Twoja odpowiedź`, `Usuń`, `Sprawdź`, plus the cell labels `nasionko` / `kiełek` / `kwiatek` / `zakryte`. Every child-facing button pairs its word with an icon.
+`Graj`, `Jeszcze raz`, `Ogród`, `Dalej`, `Brawo!`, `Prawie!`, `Nowe grządki!`, `Próbuj dalej!`, `Zadanie N z 10`, `Wyczyścić cały ogród?`, `Wpisz USUŃ, aby potwierdzić`, `Wyczyść`, `Anuluj`, the accessible names `Wyczyść ogród` (⚙), `Wróć do ogrodu`, `Twoja odpowiedź`, `Usuń`, `Sprawdź`, plus the cell labels `nasionko` / `kiełek` / `kwiatek` / `zakryte`. Every child-facing button pairs its word with an icon.
 
 ## Non-Functional Requirements
 - **Accessibility:**
@@ -145,6 +145,11 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - **Offline:** after one online visit to a production build, the app loads and plays fully offline.
 - **Privacy:** no network requests except the app's own static assets; no analytics, third-party fonts or CDNs.
 - **Performance:** the production initial bundle stays within the existing budget (warning at 500 kB); each SVG plant is ≤ 4 kB.
+
+## Hosting
+- Published as a static site on **GitHub Pages** (HTTPS), so the tablet can install it and play offline after the first visit.
+- Built with the repository path as the base href; a `404.html` copy of `index.html` lets deep links (e.g. `/graj`) work on Pages.
+- Publishing happens only from an explicit, confirmed push; nothing is deployed automatically without the owner's approval.
 
 ## Tech Stack
 - Angular 22.2: standalone components, signals, zoneless/OnPush defaults, native control flow, lazy routes. Conventions follow [CLAUDE.md](CLAUDE.md).
