@@ -62,7 +62,7 @@ const LEVEL_RANK: Record<Level, number> = { seed: 0, sprout: 1, flower: 2 };
 
       <div class="answer-area">
         @if (feedback(); as f) {
-          <div class="feedback" [class.correct]="f.correct">
+          <div #feedback class="feedback" tabindex="-1" [class.correct]="f.correct">
             @if (f.correct) {
               <p class="verdict"><span aria-hidden="true">✔</span> Brawo!</p>
               @if (f.grewTo; as level) {
@@ -120,6 +120,7 @@ export class RoundPage {
   private readonly bubbles = viewChild(AnswerBubbles);
   private readonly pad = viewChild(NumberPad);
   private readonly nextButton = viewChild<ElementRef<HTMLButtonElement>>('next');
+  private readonly feedbackBox = viewChild<ElementRef<HTMLElement>>('feedback');
   private timer: ReturnType<typeof setTimeout> | undefined;
 
   constructor() {
@@ -163,6 +164,8 @@ export class RoundPage {
 
     this.feedback.set({ correct, grewTo });
     if (correct) {
+      // The answer buttons are gone; hold focus on the praise so it doesn't fall to the page.
+      this.focusAfterRender(() => this.feedbackBox()?.nativeElement.focus());
       this.timer = setTimeout(() => this.advance(), AUTO_ADVANCE_MS);
     } else {
       this.round.update((r) => insertRetry(r, this.index()));

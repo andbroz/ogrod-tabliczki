@@ -96,6 +96,14 @@ describe('RoundPage', () => {
     expect(document.activeElement).toBe(bubbles()[0]);
   });
 
+  it('keeps focus on the praise while waiting to move on, instead of dropping it to the page', async () => {
+    const { el, answer } = await setup();
+    answer(true);
+    const feedback = el.querySelector('.feedback.correct');
+    expect(feedback).not.toBeNull();
+    expect(document.activeElement).toBe(feedback);
+  });
+
   it('shows the newly grown plant when a correct answer raises the level', async () => {
     const { el, answer } = await setup(); // fresh garden: the first fact is a seed
     answer(true);
