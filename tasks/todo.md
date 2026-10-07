@@ -298,13 +298,13 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Description:** Run `ng add @angular/pwa`. Set the manifest to Polish (name "Ogród Tabliczki", short name, theme colours that match the art) and replace the default icons with a flower icon. The service worker should cache the whole app shell, including the plant SVGs, and check for updates on load.
 
 **Acceptance criteria:**
-- [ ] A production build registers the service worker. The manifest is valid and the app is installable.
-- [ ] After one online load, the app loads and plays a full round with the network disabled
-- [ ] The network panel shows only same-origin requests
+- [x] A production build registers the service worker. The manifest is valid and the app is installable.
+- [x] After one online load, the app loads and plays a full round with the network disabled
+- [x] The network panel shows only same-origin requests
 
 **Verification:**
-- [ ] `npm run build`, then `npx http-server dist/tabliczka-mnozenia-game/browser -p 8080`
-- [ ] Manual (Chrome DevTools MCP): load the app, switch to offline, reload, play; run the Lighthouse PWA/installability check
+- [x] `npm run build`, then `npx http-server dist/tabliczka-mnozenia-game/browser -p 8080`
+- [x] Manual (Chrome DevTools MCP): load the app, switch to offline, reload, play; run the Lighthouse PWA/installability check
 
 **Dependencies:** T1 (best after T12, so the icons match the art)
 **Files:** `angular.json`, `package.json`, `ngsw-config.json`, `public/manifest.webmanifest`, `public/icons/*`, `src/app/app.config.ts`, `src/index.html`
