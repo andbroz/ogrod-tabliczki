@@ -3,6 +3,7 @@ import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { App } from './app';
 import { routes } from './app.routes';
+import { expectNoAxeViolations } from '../testing/axe';
 
 describe('App', () => {
   beforeEach(() => {
@@ -31,5 +32,10 @@ describe('App', () => {
     expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain(
       'Ogród Tabliczki',
     );
+  });
+
+  it('has no accessibility violations on the garden route', async () => {
+    const harness = await RouterTestingHarness.create('/');
+    await expectNoAxeViolations(harness.fixture.nativeElement as HTMLElement);
   });
 });

@@ -44,7 +44,7 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 
 ### Phase 1: Foundation
 - [x] Task 1: Clean client-only base
-- [ ] Task 2: Lint and axe tooling
+- [x] Task 2: Lint and axe tooling
 - [ ] Task 3: Facts, stages and growth rules
 
 ### Checkpoint A: Foundation

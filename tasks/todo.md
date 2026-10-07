@@ -32,13 +32,13 @@ Standard verification commands:
 **Description:** Run `ng add angular-eslint`, which includes the template accessibility rules. Add `axe-core` as a dev dependency, plus a small test helper `expectNoAxeViolations(element)` for component specs.
 
 **Acceptance criteria:**
-- [ ] `npx ng lint` runs and passes, with the template accessibility rules enabled
-- [ ] `src/testing/axe.ts` exports a helper that fails the test and lists any violations. The contrast rule is turned off here, because jsdom can't evaluate it; contrast is checked in the browser instead.
-- [ ] The `App` spec uses the helper and passes
+- [x] `npx ng lint` runs and passes, with the template accessibility rules enabled
+- [x] `src/testing/axe.ts` exports a helper that fails the test and lists any violations. The contrast rule is turned off here, because jsdom can't evaluate it; contrast is checked in the browser instead.
+- [x] The `App` spec uses the helper and passes
 
 **Verification:**
-- [ ] `npx ng lint` and `npx ng test --watch=false` pass
-- [ ] Temporarily add an `<img>` without `alt`: the helper test fails and lint flags it. Then revert.
+- [x] `npx ng lint` and `npx ng test --watch=false` pass
+- [x] Temporarily add an `<img>` without `alt`: the helper test fails and lint flags it. Then revert.
 
 **Dependencies:** T1
 **Files:** `package.json`, `eslint.config.js`, `angular.json`, `src/testing/axe.ts`, `src/app/app.spec.ts`
