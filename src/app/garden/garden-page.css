@@ -33,3 +33,42 @@ h1 {
 .play:hover {
   background: var(--action-hover);
 }
+
+/* Wide landscape screens (tablet landscape, desktop): title, counter and Graj on the left,
+   the garden on the right using almost the full screen height. */
+@media (orientation: landscape) and (min-width: 48rem) {
+  :host {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr auto auto auto 1fr;
+    grid-template-areas:
+      '. garden'
+      'title garden'
+      'counter garden'
+      'play garden'
+      '. garden';
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    column-gap: 3rem;
+    row-gap: 1.5rem;
+    min-height: calc(100dvh - 2rem);
+    --garden-width: min(calc((100dvh - 4rem) * 1.1), calc(100vw - 24rem));
+  }
+
+  h1 {
+    grid-area: title;
+  }
+
+  .counter {
+    grid-area: counter;
+  }
+
+  app-garden-grid {
+    grid-area: garden;
+  }
+
+  .play {
+    grid-area: play;
+  }
+}

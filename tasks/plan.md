@@ -60,11 +60,13 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Task 8: Number pad
 - [x] Task 9: Wrong-answer feedback (dot array, Dalej)
 - [x] Task 10: Round summary and stage unlock
+- [x] Task 10a: Responsive scale (from the playtest)
 
 ### Checkpoint B: Playable MVP and child playtest
 - [x] A full loop works in the browser: garden → round → summary → garden. Progress survives a reload.
 - [x] Success criteria 1–7 from the spec are met
-- [ ] **Child playtest:** hand over without explaining anything and observe (assumptions from the idea doc)
+- [x] **Child playtest:** hand over without explaining anything and observe (assumptions from the idea doc)
+  - 2026-10-07: the kids played without questions and chose **Jeszcze raz** on their own. Feedback: the desktop view is too small → responsive scaling (Task 10a).
 - [ ] Human review: adjust the tuning constants or rules before polishing
 
 ### Phase 3: Polish and Ship-Readiness

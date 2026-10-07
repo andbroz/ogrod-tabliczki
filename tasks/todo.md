@@ -205,10 +205,27 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Files:** `src/app/round/round-summary.ts`, `round-summary.spec.ts`, `round-page.ts`, `round-page.spec.ts`
 **Scope:** S
 
+## Task 10a: Responsive scale (from the playtest)
+**Description:** Make the UI grow with the screen: a fluid root font size limited by viewport width and height, and a garden grid sized to the viewport height.
+
+**Acceptance criteria:**
+- [x] Root font size: 100% on phones, up to 175% on large desktops; respects the browser's default font size
+- [x] Garden (grid + Graj) and every round screen fit without vertical scrolling at 1024×768, 1280×800, 1440×900 and 1920×1080
+- [x] No horizontal scrolling at 360 px; bubbles and keys stay ≥ 64 px
+
+**Verification:**
+- [x] `npx ng test --watch=false`, `npx ng lint`, `npm run build`
+- [x] Manual (browser MCP): measure scroll sizes and take screenshots at 360×780, 768×1024, 1024×768, 1440×900, 1920×1080
+
+**Dependencies:** T10
+**Files:** `src/styles.css`, `src/app/garden/garden-grid.css`, `src/app/garden/garden-page.css`, `src/app/round/round-page.css`
+**Scope:** S (side-by-side layouts on wide landscape screens were needed: a stacked garden is height-limited)
+
 ### ◆ Checkpoint B: Playable MVP and child playtest
 - [x] Tests, lint and build are green; success criteria 1–7 are met
 - [ ] Decide how the tablet opens the app (plan.md, Open Question 1)
-- [ ] Child playtest: no explanation, observe silently, note where they get stuck
+- [x] Child playtest: no explanation, observe silently, note where they get stuck
+  - 2026-10-07: the kids played without questions and chose **Jeszcze raz** on their own. Feedback: the desktop view is too small → responsive scaling (Task 10a).
 - [ ] Human review: adjust the constants or rules (spec update first) before Phase 3
 
 ---

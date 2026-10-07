@@ -27,6 +27,12 @@
   background: var(--bg);
 }
 
+/* Everything is sized in rem, so this scales the whole UI with the screen
+   (limited by width and height). The % bounds respect the browser's font setting. */
+html {
+  font-size: clamp(100%, min(2.5vh, 2.6vw), 175%);
+}
+
 body {
   margin: 0;
 }

@@ -102,3 +102,34 @@
 .next:hover {
   background: var(--action-hover);
 }
+
+/* Wide landscape screens: the dot array sits next to the solution so tall arrays still fit. */
+@media (orientation: landscape) and (min-width: 48rem) {
+  .feedback:not(.correct) {
+    display: grid;
+    grid-template-areas:
+      'verdict dots'
+      'solution dots'
+      'next dots';
+    align-items: center;
+    justify-items: center;
+    column-gap: 2.5rem;
+    row-gap: 0.75rem;
+  }
+
+  .verdict {
+    grid-area: verdict;
+  }
+
+  .solution {
+    grid-area: solution;
+  }
+
+  .feedback app-dot-array {
+    grid-area: dots;
+  }
+
+  .next {
+    grid-area: next;
+  }
+}
