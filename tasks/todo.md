@@ -177,13 +177,13 @@ For this task, **every** problem is answered with bubbles. Answers are recorded 
 For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 
 **Acceptance criteria:**
-- [ ] A wrong answer shows `a × b = product` plus a dot array with exactly a·b dots and the label from the spec. Focus is on Dalej, and there's no automatic advance.
-- [ ] The wrongly answered fact reappears 2–3 problems later (once), and the round still has 10 problems
-- [ ] axe reports 0 violations in the wrong-answer state
+- [x] A wrong answer shows `a × b = product` plus a dot array with exactly a·b dots and the label from the spec. Focus is on Dalej, and there's no automatic advance.
+- [x] The wrongly answered fact reappears 2–3 problems later (once), and the round still has 10 problems
+- [x] axe reports 0 violations in the wrong-answer state
 
 **Verification:**
-- [ ] `npx ng test --watch=false` passes
-- [ ] Manual: answer wrong on purpose; check the dots, the focus and the retry
+- [x] `npx ng test --watch=false` passes
+- [x] Manual: answer wrong on purpose; check the dots, the focus and the retry
 
 **Dependencies:** T8
 **Files:** `src/app/round/dot-array.ts`, `dot-array.spec.ts`, `round-page.ts`, `round-page.spec.ts`

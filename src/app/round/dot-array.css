@@ -1,0 +1,33 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  background: #ffffff;
+}
+
+.row {
+  display: flex;
+  gap: 0.35rem;
+  min-height: 0.9rem;
+  min-width: 4rem;
+  border-radius: 999px;
+}
+
+/* An empty row (n × 0) is still visible as an outline. */
+.row:empty {
+  border: 2px dashed var(--text-muted);
+}
+
+.dot {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: var(--soil);
+}
+
+/* A small gap after the fifth dot makes counting by fives easier. */
+.dot:nth-child(5):not(:last-child) {
+  margin-right: 0.4rem;
+}

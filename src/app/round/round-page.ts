@@ -12,10 +12,11 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { answerOptions } from '../game/distractors';
 import { AUTO_ADVANCE_MS, ROUND_LENGTH } from '../game/facts';
-import { buildRound } from '../game/round-builder';
+import { buildRound, insertRetry } from '../game/round-builder';
 import { ProgressStore } from '../progress/progress-store';
 import { RANDOM } from '../random';
 import { AnswerBubbles } from './answer-bubbles';
+import { DotArray } from './dot-array';
 import { NumberPad } from './number-pad';
 
 interface Feedback {
@@ -24,7 +25,7 @@ interface Feedback {
 
 @Component({
   selector: 'app-round-page',
-  imports: [AnswerBubbles, NumberPad, RouterLink],
+  imports: [AnswerBubbles, DotArray, NumberPad, RouterLink],
   styleUrl: './round-page.css',
   template: `
     <header class="top">
@@ -46,6 +47,7 @@ interface Feedback {
         } @else {
           <p class="verdict">Prawie!</p>
           <p class="solution">{{ problem().left }} × {{ problem().right }} = {{ product() }}</p>
+          <app-dot-array [rows]="problem().left" [cols]="problem().right" />
           <button #next type="button" class="next" (click)="advance()">
             Dalej <span aria-hidden="true">➜</span>
           </button>
@@ -117,6 +119,7 @@ export class RoundPage {
     if (correct) {
       this.timer = setTimeout(() => this.advance(), AUTO_ADVANCE_MS);
     } else {
+      this.round.update((r) => insertRetry(r, this.index()));
       this.focusAfterRender(() => this.nextButton()?.nativeElement.focus());
     }
   }

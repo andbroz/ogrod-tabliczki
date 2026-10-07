@@ -143,6 +143,40 @@ describe('RoundPage', () => {
     expect(store.zeroRuleCorrect()).toBe(1);
   });
 
+  it('explains a mistake with a dot array', async () => {
+    const { el, problem, answer } = await setup();
+    const { left, right } = problem();
+    answer(false);
+    const dots = el.querySelector('.feedback app-dot-array');
+    expect(dots).not.toBeNull();
+    expect(dots!.querySelectorAll('.dot')).toHaveLength(left * right);
+  });
+
+  it('asks a missed fact again 2–3 problems later', async () => {
+    // On a fresh garden the first facts already appear twice, which blocks a retry,
+    // so start from a garden where every stage-1 fact has sprouted.
+    const growAll = (store: ProgressStore) =>
+      store.unlockedFacts().forEach((f) => store.recordAnswer(f.key, true));
+    const { render, problem, answer, next } = await setup(growAll);
+    const first = problem();
+    expect(first.left * first.right).toBeGreaterThan(0); // seed 7 starts with a fact
+    answer(false);
+    next()!.click();
+    render();
+
+    vi.useFakeTimers();
+    const later: string[] = [];
+    for (let i = 0; i < 3; i++) {
+      const { left, right } = problem();
+      later.push(factKey(left, right));
+      answer(true);
+      vi.advanceTimersByTime(AUTO_ADVANCE_MS);
+      render();
+    }
+    // Problems 2, 3, 4 were asked; the retry lands on problem 3 or 4.
+    expect(later.slice(1)).toContain(factKey(first.left, first.right));
+  });
+
   it('ignores further taps once a problem is answered', async () => {
     const { answer, bubbles } = await setup();
     answer(false);
