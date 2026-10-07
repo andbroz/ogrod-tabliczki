@@ -57,7 +57,7 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Task 5: Garden screen (plain grid)
 - [x] Task 6: Round builder and distractors
 - [x] Task 7: Round with answer bubbles
-- [ ] Task 8: Number pad
+- [x] Task 8: Number pad
 - [ ] Task 9: Wrong-answer feedback (dot array, Dalej)
 - [ ] Task 10: Round summary and stage unlock
 

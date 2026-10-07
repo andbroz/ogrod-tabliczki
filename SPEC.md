@@ -129,7 +129,7 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - If `localStorage` is unavailable, the game runs in memory and doesn't crash.
 
 ### Copy (complete MVP list)
-`Graj`, `Jeszcze raz`, `Ogród`, `Dalej`, `Brawo!`, `Prawie!`, `Nowe grządki!`, `Zadanie N z 10`, `Wyczyścić cały ogród?`, `Wpisz USUŃ, aby potwierdzić`, `Wyczyść`, `Anuluj`, plus the cell labels `nasionko` / `kiełek` / `kwiatek` / `zakryte`. Every child-facing button pairs its word with an icon.
+`Graj`, `Jeszcze raz`, `Ogród`, `Dalej`, `Brawo!`, `Prawie!`, `Nowe grządki!`, `Zadanie N z 10`, `Wyczyścić cały ogród?`, `Wpisz USUŃ, aby potwierdzić`, `Wyczyść`, `Anuluj`, the accessible names `Wróć do ogrodu`, `Twoja odpowiedź`, `Usuń`, `Sprawdź`, plus the cell labels `nasionko` / `kiełek` / `kwiatek` / `zakryte`. Every child-facing button pairs its word with an icon.
 
 ## Non-Functional Requirements
 - **Accessibility:**

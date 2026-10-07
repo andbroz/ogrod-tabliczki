@@ -155,13 +155,13 @@ For this task, **every** problem is answered with bubbles. Answers are recorded 
 **Description:** Build `NumberPad`: an output field plus keys 0–9, ⌫ and ✓, limited to 3 digits, with ✓ disabled while empty. The physical keys (digits, Backspace, Enter) are handled through the component's `host` bindings. `RoundPage` shows the number pad for sprout and flower facts and for the ×0 rule, and bubbles for seeds.
 
 **Acceptance criteria:**
-- [ ] Digits are added up to 3; ⌫ deletes; ✓ emits the number and clears the field. Confirming an empty field is impossible.
-- [ ] The physical keyboard gives the same results as the on-screen keys. The keys are ≥ 64 px.
-- [ ] The round uses the correct input mode for each level. ×0 problems update `zeroRuleCorrect` and not the garden.
+- [x] Digits are added up to 3; ⌫ deletes; ✓ emits the number and clears the field. Confirming an empty field is impossible.
+- [x] The physical keyboard gives the same results as the on-screen keys. The keys are ≥ 64 px.
+- [x] The round uses the correct input mode for each level. ×0 problems update `zeroRuleCorrect` and not the garden.
 
 **Verification:**
-- [ ] `npx ng test --watch=false`: the number pad and round specs pass; axe reports 0 violations
-- [ ] Manual: answer one problem by touch (emulated) and one by keyboard only
+- [x] `npx ng test --watch=false`: the number pad and round specs pass; axe reports 0 violations
+- [x] Manual: answer one problem by touch (emulated) and one by keyboard only
 
 **Dependencies:** T7
 **Files:** `src/app/round/number-pad.ts`, `number-pad.spec.ts`, `round-page.ts`, `round-page.spec.ts`

@@ -16,6 +16,7 @@ import { buildRound } from '../game/round-builder';
 import { ProgressStore } from '../progress/progress-store';
 import { RANDOM } from '../random';
 import { AnswerBubbles } from './answer-bubbles';
+import { NumberPad } from './number-pad';
 
 interface Feedback {
   readonly correct: boolean;
@@ -23,7 +24,7 @@ interface Feedback {
 
 @Component({
   selector: 'app-round-page',
-  imports: [AnswerBubbles, RouterLink],
+  imports: [AnswerBubbles, NumberPad, RouterLink],
   styleUrl: './round-page.css',
   template: `
     <header class="top">
@@ -50,6 +51,8 @@ interface Feedback {
           </button>
         }
       </div>
+    } @else if (usePad()) {
+      <app-number-pad (submitted)="answer($event)" />
     } @else {
       <app-answer-bubbles [options]="options()" (picked)="answer($event)" />
     }
@@ -78,6 +81,11 @@ export class RoundPage {
   protected readonly feedback = signal<Feedback | null>(null);
   protected readonly problem = computed(() => this.round()[this.index()]);
   protected readonly product = computed(() => this.problem().left * this.problem().right);
+  /** Seeds are answered with bubbles; sprouts, flowers and the ×0 rule are typed. */
+  protected readonly usePad = computed(() => {
+    const p = this.problem();
+    return p.kind === 'zero' || this.store.factProgress(p.key).level !== 'seed';
+  });
   protected readonly options = computed(() =>
     answerOptions(this.problem().left, this.problem().right, this.random),
   );
@@ -89,12 +97,13 @@ export class RoundPage {
   });
 
   private readonly bubbles = viewChild(AnswerBubbles);
+  private readonly pad = viewChild(NumberPad);
   private readonly nextButton = viewChild<ElementRef<HTMLButtonElement>>('next');
   private timer: ReturnType<typeof setTimeout> | undefined;
 
   constructor() {
     inject(DestroyRef).onDestroy(() => clearTimeout(this.timer));
-    this.focusAfterRender(() => this.bubbles()?.focusFirst());
+    this.focusAfterRender(() => this.focusInput());
   }
 
   protected answer(value: number): void {
@@ -120,7 +129,12 @@ export class RoundPage {
     }
     this.index.update((i) => i + 1);
     this.feedback.set(null);
-    this.focusAfterRender(() => this.bubbles()?.focusFirst());
+    this.focusAfterRender(() => this.focusInput());
+  }
+
+  private focusInput(): void {
+    this.bubbles()?.focusFirst();
+    this.pad()?.focus();
   }
 
   private focusAfterRender(focus: () => void): void {

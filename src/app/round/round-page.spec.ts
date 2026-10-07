@@ -12,7 +12,7 @@ import { RoundPage } from './round-page';
 @Component({ template: '' })
 class EmptyPage {}
 
-async function setup() {
+async function setup(before: (store: ProgressStore) => void = () => undefined) {
   TestBed.configureTestingModule({
     providers: [
       provideRouter([
@@ -23,6 +23,7 @@ async function setup() {
       { provide: RANDOM, useValue: seededRandom(7) },
     ],
   });
+  before(TestBed.inject(ProgressStore));
   const harness = await RouterTestingHarness.create('/graj');
   const fixture = harness.fixture;
   const el = fixture.nativeElement as HTMLElement;
@@ -33,18 +34,28 @@ async function setup() {
     return { left, right, product: left * right };
   };
   const bubbles = () => [...el.querySelectorAll<HTMLButtonElement>('app-answer-bubbles button')];
+  const padKey = (label: string) =>
+    [...el.querySelectorAll<HTMLButtonElement>('app-number-pad button')].find(
+      (b) => b.textContent?.trim() === label || b.getAttribute('aria-label') === label,
+    )!;
   const answer = (correct: boolean) => {
     const { product } = problem();
-    bubbles()
-      .find((b) => (Number(b.textContent) === product) === correct)!
-      .click();
+    if (el.querySelector('app-number-pad')) {
+      for (const digit of String(correct ? product : product + 1)) padKey(digit).click();
+      render();
+      padKey('Sprawdź').click();
+    } else {
+      bubbles()
+        .find((b) => (Number(b.textContent) === product) === correct)!
+        .click();
+    }
     render();
   };
   const liveText = () => el.querySelector('[aria-live]')?.textContent?.trim();
   const progressText = () => el.querySelector('.progress-label')?.textContent?.trim();
   const next = () => el.querySelector<HTMLButtonElement>('button.next');
 
-  return { harness, el, render, problem, bubbles, answer, liveText, progressText, next };
+  return { harness, el, render, problem, bubbles, padKey, answer, liveText, progressText, next };
 }
 
 describe('RoundPage', () => {
@@ -102,6 +113,34 @@ describe('RoundPage', () => {
     next()!.click();
     render();
     expect(progressText()).toBe('Zadanie 2 z 10');
+  });
+
+  it('uses the number pad for sprouts, flowers and the ×0 rule', async () => {
+    const growAll = (store: ProgressStore) =>
+      store.unlockedFacts().forEach((f) => store.recordAnswer(f.key, true));
+    const { el, render, answer } = await setup(growAll);
+    vi.useFakeTimers();
+    for (let i = 0; i < 10; i++) {
+      expect(el.querySelector('app-number-pad')).not.toBeNull();
+      expect(el.querySelector('app-answer-bubbles')).toBeNull();
+      answer(true);
+      vi.advanceTimersByTime(AUTO_ADVANCE_MS);
+      render();
+    }
+  });
+
+  it('records ×0 answers in the rule counter, not the garden', async () => {
+    const { el, render, problem, answer, next } = await setup();
+    const store = TestBed.inject(ProgressStore);
+    for (let i = 0; i < 10 && store.zeroRuleCorrect() === 0; i++) {
+      const { left, right } = problem();
+      const isZero = left === 0 || right === 0;
+      if (isZero) expect(el.querySelector('app-number-pad')).not.toBeNull();
+      answer(isZero);
+      if (!isZero) next()!.click();
+      render();
+    }
+    expect(store.zeroRuleCorrect()).toBe(1);
   });
 
   it('ignores further taps once a problem is answered', async () => {
