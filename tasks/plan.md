@@ -76,7 +76,7 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Task 12: SVG garden art and grow animation
 - [x] Task 13: PWA offline support
 - [ ] Task 14: Final accessibility and responsive pass
-- [ ] Task 15: Publish on GitHub Pages
+- [x] Task 15: Publish on GitHub Pages (live; real-tablet check pending)
 
 ### Checkpoint C: Complete
 - [ ] All 12 success criteria in the spec are met

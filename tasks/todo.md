@@ -331,15 +331,17 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Description:** Create the GitHub repository (name, visibility and account confirmed by the owner first), push the branch, and publish the production build to GitHub Pages with the repository base href and a `404.html` fallback.
 
 **Acceptance criteria:**
-- [ ] The live HTTPS URL loads the garden; `/<repo>/graj` deep link works
-- [ ] After one online visit on the tablet, the app installs and plays a full round offline
-- [ ] Only same-origin requests on the live site
+- [x] The live HTTPS URL loads the garden; `/<repo>/graj` deep link works (https://andbroz.github.io/ogrod-tabliczki/)
+- [ ] After one online visit on the tablet, the app installs and plays a full round offline (verified offline in desktop Chrome; real tablet check pending)
+- [x] Only same-origin requests on the live site
 
 **Verification:**
-- [ ] Manual (browser MCP) on the live URL: load, deep link, offline reload, network panel; then on the real tablet
+- [x] Manual (browser MCP) on the live URL: load, deep link, offline reload, network panel
+- [ ] On the real tablet: add to home screen, go offline, play
 
 **Dependencies:** T13 (and T14)
-**Note:** add `<meta name="description">` (the only failing Lighthouse SEO audit, found in T12).
+**Note:** `<meta name="description">` added (the only failing Lighthouse SEO audit, found in T12).
+**Outcome (2026-10-07):** public repo `andbroz/ogrod-tabliczki`, Pages source = GitHub Actions. The first run had to be started manually because Actions wasn't enabled on the new repo yet.
 **Files:** `angular.json` or build script, `.github/workflows/*` (if a Pages workflow is used), `README.md`
 **Scope:** S
 
