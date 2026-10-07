@@ -63,7 +63,7 @@ Standard verification commands:
 **Scope:** S
 
 ### ◆ Checkpoint A: Foundation
-- [ ] Tests, lint and build are green; the app loads with no console errors
+- [x] Tests, lint and build are green; the app loads with no console errors
 - [ ] Human review
 
 ---
@@ -79,12 +79,12 @@ Standard verification commands:
 The store saves to `localStorage` key `ogrod-tabliczki:v1` after every change.
 
 **Acceptance criteria:**
-- [ ] Load → change → reload round-trips the state exactly
-- [ ] Corrupt JSON, an unknown `version`, or `localStorage` throwing all fall back to a fresh state without an exception
-- [ ] `unlockNextStageIfReady()` unlocks at most one stage, only when ≥ 80% of the unlocked facts are sprout or flower, and returns the newly unlocked tables (or `null`)
+- [x] Load → change → reload round-trips the state exactly
+- [x] Corrupt JSON, an unknown `version`, or `localStorage` throwing all fall back to a fresh state without an exception
+- [x] `unlockNextStageIfReady()` unlocks at most one stage, only when ≥ 80% of the unlocked facts are sprout or flower, and returns the newly unlocked tables (or `null`)
 
 **Verification:**
-- [ ] `npx ng test --watch=false`: the store spec passes
+- [x] `npx ng test --watch=false`: the store spec passes
 
 **Dependencies:** T3
 **Files:** `src/app/progress/progress-store.ts`, `progress-store.spec.ts`

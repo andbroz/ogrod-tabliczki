@@ -48,12 +48,12 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Task 3: Facts, stages and growth rules
 
 ### Checkpoint A: Foundation
-- [ ] `npx ng test --watch=false`, `npx ng lint` and `npm run build` are all green
-- [ ] The app loads in the browser with no console errors
+- [x] `npx ng test --watch=false`, `npx ng lint` and `npm run build` are all green
+- [x] The app loads in the browser with no console errors
 - [ ] Human review
 
 ### Phase 2: Playable Loop
-- [ ] Task 4: Progress store with persistence
+- [x] Task 4: Progress store with persistence
 - [ ] Task 5: Garden screen (plain grid)
 - [ ] Task 6: Round builder and distractors
 - [ ] Task 7: Round with answer bubbles
