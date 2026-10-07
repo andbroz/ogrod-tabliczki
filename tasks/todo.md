@@ -353,4 +353,4 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 
 ### ◆ Checkpoint C: Complete
 - [x] All spec success criteria are met (verified in Task 14; offline on the real tablet in Task 15)
-- [ ] Human review
+- [x] Human review (2026-10-07: approved by the owner)
