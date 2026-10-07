@@ -1,59 +1,44 @@
-# TabliczkaMnozeniaGame
+# Ogród Tabliczki
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.2.
+A garden game that helps children aged 7–9 learn the multiplication table up to 100 (*tabliczka mnożenia*). The interface is in Polish and designed for children who are still learning to read: icons, digits and colours do most of the talking.
 
-## Development server
+**Play:** https://andbroz.github.io/tabliczka-mnozenia-game/
 
-To start a local development server, run:
+## How it works
 
-```bash
-ng serve
-```
+- The home screen is a 10 × 10 garden. Every multiplication fact is a plant that grows 🌱 seed → 🌿 sprout → 🌸 flower. 7 × 8 and 8 × 7 share one plant.
+- **Graj** starts a round of 10 problems. New facts are answered by tapping one of three answers; facts the child already knows a bit are typed on a number pad.
+- Two correct answers in a row grow a flower; a mistake moves the plant back one step and shows a picture of dots that explains the answer.
+- New garden beds (×5 and ×10, then ×3 and ×4, then ×6–×9) open automatically as the child progresses. "Anything × 0 = 0" is practised as a quick rule.
+- No timers, no lives, no leaderboards.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Privacy and offline use
 
-## Code scaffolding
+- Progress is stored only in the browser on the device (`localStorage`). There are no accounts, no server and no analytics.
+- After the first visit the game works offline and can be added to the home screen of a tablet or phone.
+- A parent can reset the garden with the ⚙ button (type `USUŃ` to confirm).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Development
 
-```bash
-ng generate component component-name
-```
+Requires Node.js 24.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+| Task | Command |
+|---|---|
+| Install | `npm ci` |
+| Dev server (http://localhost:4200) | `npm start` |
+| Unit tests | `npx ng test --watch=false` |
+| Tests with coverage | `npx ng test --watch=false --coverage` |
+| Lint | `npx ng lint` |
+| Production build | `npm run build` |
 
-```bash
-ng generate --help
-```
+The service worker is only active in production builds. To try offline mode locally, build and serve `dist/tabliczka-mnozenia-game/browser` with a static server (e.g. `npx http-server`), load the page once, then go offline.
 
-## Building
+## Deployment
 
-To build the project run:
+Every push to `main` runs lint and tests, builds with the repository base href, and publishes to GitHub Pages ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)).
 
-```bash
-ng build
-```
+## Project documents
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [docs/ideas/ogrod-tabliczki.md](docs/ideas/ogrod-tabliczki.md): the idea and what's deliberately not included
+- [SPEC.md](SPEC.md): the specification and game rules
+- [tasks/plan.md](tasks/plan.md): the implementation plan
