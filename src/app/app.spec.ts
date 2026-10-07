@@ -1,24 +1,35 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter, Router } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { App } from './app';
+import { routes } from './app.routes';
 
 describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [App],
-    })
-      .compileComponents();
+      providers: [provideRouter(routes)],
+    });
   });
 
-  it('should create the app', () => {
+  it('renders the router outlet inside main', () => {
     const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    const main = (fixture.nativeElement as HTMLElement).querySelector('main');
+    expect(main?.querySelector('router-outlet')).not.toBeNull();
   });
 
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, tabliczka-mnozenia-game');
+  it('shows the garden page at the root route', async () => {
+    const harness = await RouterTestingHarness.create('/');
+    expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain(
+      'Ogród Tabliczki',
+    );
+  });
+
+  it('redirects unknown routes to the garden', async () => {
+    const harness = await RouterTestingHarness.create('/nie-ma');
+    expect(TestBed.inject(Router).url).toBe('/');
+    expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain(
+      'Ogród Tabliczki',
+    );
   });
 });
