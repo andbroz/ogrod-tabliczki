@@ -2,7 +2,7 @@
 
 A garden game that helps children aged 7–9 learn the multiplication table up to 100 (*tabliczka mnożenia*). The interface is in Polish and designed for children who are still learning to read: icons, digits and colours do most of the talking.
 
-**Play:** https://andbroz.github.io/tabliczka-mnozenia-game/
+**Play:** https://andbroz.github.io/ogrod-tabliczki/
 
 ## How it works
 
