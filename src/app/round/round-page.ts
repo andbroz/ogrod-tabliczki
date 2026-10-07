@@ -23,6 +23,8 @@ import { RoundSummary } from './round-summary';
 
 interface Feedback {
   readonly correct: boolean;
+  /** The plant's new level when this answer made it grow. */
+  readonly grewTo: Level | null;
 }
 
 interface Summary {
@@ -63,6 +65,9 @@ const LEVEL_RANK: Record<Level, number> = { seed: 0, sprout: 1, flower: 2 };
           <div class="feedback" [class.correct]="f.correct">
             @if (f.correct) {
               <p class="verdict"><span aria-hidden="true">✔</span> Brawo!</p>
+              @if (f.grewTo; as level) {
+                <span class="grown-plant" [class]="level" aria-hidden="true"></span>
+              }
             } @else {
               <p class="verdict">Prawie!</p>
               <p class="solution">{{ problem().left }} × {{ problem().right }} = {{ product() }}</p>
@@ -147,10 +152,16 @@ export class RoundPage {
     if (this.feedback()) return;
     const problem = this.problem();
     const correct = value === this.product();
-    if (problem.kind === 'fact') this.store.recordAnswer(problem.key, correct);
-    else this.store.recordZeroRule(correct);
+    let grewTo: Level | null = null;
+    if (problem.kind === 'fact') {
+      const before = this.store.factProgress(problem.key).level;
+      const after = this.store.recordAnswer(problem.key, correct).level;
+      if (LEVEL_RANK[after] > LEVEL_RANK[before]) grewTo = after;
+    } else {
+      this.store.recordZeroRule(correct);
+    }
 
-    this.feedback.set({ correct });
+    this.feedback.set({ correct, grewTo });
     if (correct) {
       this.timer = setTimeout(() => this.advance(), AUTO_ADVANCE_MS);
     } else {

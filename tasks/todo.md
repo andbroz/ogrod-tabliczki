@@ -279,19 +279,19 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Scope:** S
 
 ## Task 12: SVG garden art and grow animation
-**Description:** Draw `seed.svg`, `sprout.svg`, `flower.svg` and `soil-covered.svg` in `public/plants/`: flat style, each ≤ 4 kB, each state a clearly different shape. Apply them through the garden CSS classes as background images (replacing the plain colours). Style the round screens to match the garden, and add a short grow transition that is turned off under `prefers-reduced-motion`.
+**Description:** Draw `seed.svg`, `sprout.svg`, `flower.svg` and `soil-covered.svg` in `src/plants/` (relative CSS `url()`s, so the build bundles and hashes them and they work under the GitHub Pages sub-path): flat style, each ≤ 4 kB, each state a clearly different shape. Apply them through the garden CSS classes as background images (replacing the plain colours). Style the round screens to match the garden, and show the newly grown plant with a short grow animation in the round's correct-answer feedback when the level goes up (spec: Round screen), turned off under `prefers-reduced-motion`.
 
 **Acceptance criteria:**
-- [ ] The 4 SVGs are each ≤ 4 kB and use no external references. The plants have ≥ 3:1 contrast against the soil, and the states are distinguishable in greyscale.
-- [ ] The garden and round screens use the art; the grow animation plays only when motion is allowed
-- [ ] Lighthouse accessibility is 100 on the garden and the round
+- [x] The 4 SVGs are each ≤ 4 kB and use no external references. The plants have ≥ 3:1 contrast against the soil, and the states are distinguishable in greyscale.
+- [x] The garden and round screens use the art; the grow animation plays only when motion is allowed
+- [x] Lighthouse accessibility is 100 on the garden and the round
 
 **Verification:**
-- [ ] `npm run build` stays within the budgets
-- [ ] Manual (browser MCP): screenshots in colour and in a greyscale emulation, plus emulated reduced motion; Lighthouse audit
+- [x] `npm run build` stays within the budgets
+- [x] Manual (browser MCP): screenshots in colour and in a greyscale emulation, plus emulated reduced motion; Lighthouse audit
 
 **Dependencies:** T5 (best after Checkpoint B)
-**Files:** `public/plants/*.svg`, `src/app/garden/garden-grid.css`, `src/styles.css`, `src/app/round/*.css`
+**Files:** `src/plants/*.svg`, `src/plants/plants.spec.ts`, `src/app/garden/garden-grid.css`, `src/app/round/round-page.{ts,css,spec.ts}`
 **Scope:** M
 
 ## Task 13: PWA offline support
@@ -339,6 +339,7 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 - [ ] Manual (browser MCP) on the live URL: load, deep link, offline reload, network panel; then on the real tablet
 
 **Dependencies:** T13 (and T14)
+**Note:** add `<meta name="description">` (the only failing Lighthouse SEO audit, found in T12).
 **Files:** `angular.json` or build script, `.github/workflows/*` (if a Pages workflow is used), `README.md`
 **Scope:** S
 

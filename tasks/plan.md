@@ -73,7 +73,7 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 ### Phase 3: Polish and Ship-Readiness
 - [x] Task 10c: Encouragement when nothing grew
 - [x] Task 11: Reset dialog
-- [ ] Task 12: SVG garden art and grow animation
+- [x] Task 12: SVG garden art and grow animation
 - [ ] Task 13: PWA offline support
 - [ ] Task 14: Final accessibility and responsive pass
 - [ ] Task 15: Publish on GitHub Pages

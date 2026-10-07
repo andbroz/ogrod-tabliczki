@@ -91,6 +91,42 @@
   color: var(--action);
 }
 
+/* The plant that just grew, popping up from the soil. */
+.grown-plant {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 1rem;
+  background: var(--soil) center / 80% no-repeat;
+}
+
+.grown-plant.sprout {
+  background-image: url('../../plants/sprout.svg');
+}
+
+.grown-plant.flower {
+  background-image: url('../../plants/flower.svg');
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .grown-plant {
+    animation: grow 600ms cubic-bezier(0.2, 0.8, 0.3, 1.3) both;
+  }
+}
+
+@keyframes grow {
+  from {
+    background-size: 0%;
+    background-position: center bottom;
+    opacity: 0.4;
+  }
+
+  to {
+    background-size: 80%;
+    background-position: center;
+    opacity: 1;
+  }
+}
+
 .solution {
   margin: 0;
   font-size: 2.25rem;

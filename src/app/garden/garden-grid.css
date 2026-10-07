@@ -37,39 +37,27 @@ td::after {
   padding-top: 100%;
 }
 
-/* Placeholder shapes until the SVG art (Task 12); each state has its own shape. */
+/* The plant for each state; each has its own shape, so colour is never the only signal. */
 td::before {
   content: '';
   position: absolute;
-  inset: 0;
-  margin: auto;
+  inset: 6%;
+  background: center / contain no-repeat;
 }
 
 td.seed::before {
-  width: 30%;
-  height: 30%;
-  border-radius: 50%;
-  background: var(--seed);
+  background-image: url('../../plants/seed.svg');
 }
 
 td.sprout::before {
-  width: 22%;
-  height: 70%;
-  border-radius: 999px;
-  background: var(--sprout);
+  background-image: url('../../plants/sprout.svg');
 }
 
 td.flower::before {
-  width: 72%;
-  height: 72%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--flower-center) 0 28%, var(--flower) 30%);
+  background-image: url('../../plants/flower.svg');
 }
 
+/* Not unlocked yet: dark, ploughed soil with no plant. */
 td.locked {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--soil-covered) 0 4px,
-    var(--soil-covered-stripe) 4px 8px
-  );
+  background: var(--soil-covered) url('../../plants/soil-covered.svg') center / cover no-repeat;
 }

@@ -96,6 +96,28 @@ describe('RoundPage', () => {
     expect(document.activeElement).toBe(bubbles()[0]);
   });
 
+  it('shows the newly grown plant when a correct answer raises the level', async () => {
+    const { el, answer } = await setup(); // fresh garden: the first fact is a seed
+    answer(true);
+    const plant = el.querySelector('.feedback .grown-plant');
+    expect(plant?.classList).toContain('sprout');
+    expect(plant?.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('shows no grown plant when the level stays the same', async () => {
+    const allFlowers = (store: ProgressStore) =>
+      store.unlockedFacts().forEach((f) => {
+        store.recordAnswer(f.key, true);
+        store.recordAnswer(f.key, true);
+      });
+    const { el, problem, answer } = await setup(allFlowers);
+    const { left, right } = problem();
+    expect(left * right).toBeGreaterThan(0); // seed 7 starts with a fact
+    answer(true);
+    expect(el.querySelector('.feedback.correct')).not.toBeNull();
+    expect(el.querySelector('.grown-plant')).toBeNull();
+  });
+
   it('shows the correct answer after a mistake and waits for Dalej', async () => {
     const { el, render, problem, answer, liveText, progressText, next } = await setup();
     vi.useFakeTimers();
