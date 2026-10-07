@@ -248,6 +248,20 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 
 ## Phase 3: Polish and Ship-Readiness
 
+## Task 10c: Encouragement when nothing grew
+**Description:** When a round grows nothing, the summary shows "🌱 Próbuj dalej!" instead of an empty list.
+
+**Acceptance criteria:**
+- [x] With 0 sprouts and 0 flowers the summary shows "Próbuj dalej!" (icon hidden from screen readers); otherwise it doesn't
+- [x] axe reports 0 violations
+
+**Verification:**
+- [x] `npx ng test --watch=false`, `npx ng lint`, `npm run build`
+
+**Dependencies:** T10
+**Files:** `src/app/round/round-summary.{ts,css,spec.ts}`
+**Scope:** XS
+
 ## Task 11: Reset dialog
 **Description:** Build `ResetDialog` as a native `<dialog>`, opened by the ⚙ button on the garden. It asks "Wyczyścić cały ogród?". **Wyczyść** is enabled only after the parent types `USUŃ` (case-insensitive). **Anuluj** and Esc close the dialog, and focus returns to ⚙.
 
@@ -312,6 +326,21 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Dependencies:** T1–T13
 **Files:** fixes only, as needed
 **Scope:** S–M
+
+## Task 15: Publish on GitHub Pages
+**Description:** Create the GitHub repository (name, visibility and account confirmed by the owner first), push the branch, and publish the production build to GitHub Pages with the repository base href and a `404.html` fallback.
+
+**Acceptance criteria:**
+- [ ] The live HTTPS URL loads the garden; `/<repo>/graj` deep link works
+- [ ] After one online visit on the tablet, the app installs and plays a full round offline
+- [ ] Only same-origin requests on the live site
+
+**Verification:**
+- [ ] Manual (browser MCP) on the live URL: load, deep link, offline reload, network panel; then on the real tablet
+
+**Dependencies:** T13 (and T14)
+**Files:** `angular.json` or build script, `.github/workflows/*` (if a Pages workflow is used), `README.md`
+**Scope:** S
 
 ### ◆ Checkpoint C: Complete
 - [ ] All spec success criteria are met

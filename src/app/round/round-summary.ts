@@ -15,20 +15,24 @@ import { RouterLink } from '@angular/router';
   styleUrl: './round-summary.css',
   template: `
     <h1 class="visually-hidden">Koniec rundy</h1>
-    <ul class="grown">
-      @if (flowers() > 0) {
-        <li>
-          <span aria-hidden="true">+{{ flowers() }} 🌸</span>
-          <span class="visually-hidden">Nowe kwiatki: {{ flowers() }}</span>
-        </li>
-      }
-      @if (sprouts() > 0) {
-        <li>
-          <span aria-hidden="true">+{{ sprouts() }} 🌿</span>
-          <span class="visually-hidden">Nowe kiełki: {{ sprouts() }}</span>
-        </li>
-      }
-    </ul>
+    @if (flowers() + sprouts() > 0) {
+      <ul class="grown">
+        @if (flowers() > 0) {
+          <li>
+            <span aria-hidden="true">+{{ flowers() }} 🌸</span>
+            <span class="visually-hidden">Nowe kwiatki: {{ flowers() }}</span>
+          </li>
+        }
+        @if (sprouts() > 0) {
+          <li>
+            <span aria-hidden="true">+{{ sprouts() }} 🌿</span>
+            <span class="visually-hidden">Nowe kiełki: {{ sprouts() }}</span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="encourage"><span aria-hidden="true">🌱</span> Próbuj dalej!</p>
+    }
     @if (tablesText(); as tables) {
       <p class="unlocked">
         Nowe grządki!

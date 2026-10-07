@@ -29,6 +29,18 @@ describe('RoundSummary', () => {
     expect(text()).toContain('+1 🌸');
   });
 
+  it('encourages the child when nothing grew', async () => {
+    const { el, text } = await setup(0, 0, null);
+    expect(text()).toContain('Próbuj dalej!');
+    expect(el.querySelector('.encourage [aria-hidden="true"]')?.textContent).toContain('🌱');
+    expect(el.querySelector('ul.grown')).toBeNull();
+  });
+
+  it('does not show the encouragement when something grew', async () => {
+    const { text } = await setup(1, 0, null);
+    expect(text()).not.toContain('Próbuj dalej');
+  });
+
   it('announces newly opened garden beds', async () => {
     const { text } = await setup(1, 0, [3, 4]);
     expect(text()).toContain('Nowe grządki!');
