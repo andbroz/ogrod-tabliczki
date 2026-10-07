@@ -1,4 +1,5 @@
 :host {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,6 +33,28 @@ h1 {
 
 .play:hover {
   background: var(--action-hover);
+}
+
+/* Parent-only control: small and out of the layout flow, so it doesn't change how the garden fits. */
+.reset {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 2px solid var(--text-muted);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.reset:hover {
+  background: var(--bubble-hover);
 }
 
 /* Wide landscape screens (tablet landscape, desktop): title, counter and Graj on the left,

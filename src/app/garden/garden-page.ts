@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 import { FACTS } from '../game/facts';
 import { ProgressStore } from '../progress/progress-store';
 import { GardenGrid } from './garden-grid';
+import { ResetDialog } from './reset-dialog';
 
 @Component({
   selector: 'app-garden-page',
-  imports: [GardenGrid, RouterLink],
+  imports: [GardenGrid, ResetDialog, RouterLink],
   styleUrl: './garden-page.css',
   template: `
     <h1><span aria-hidden="true">🌱</span> Ogród Tabliczki</h1>
@@ -16,6 +17,10 @@ import { GardenGrid } from './garden-grid';
     </p>
     <app-garden-grid />
     <a #play class="play" routerLink="/graj"><span aria-hidden="true">▶</span> Graj</a>
+    <button type="button" class="reset" aria-label="Wyczyść ogród" (click)="resetDialog.open()">
+      <span aria-hidden="true">⚙</span>
+    </button>
+    <app-reset-dialog #resetDialog />
   `,
 })
 export class GardenPage {

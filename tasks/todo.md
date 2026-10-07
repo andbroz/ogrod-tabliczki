@@ -266,13 +266,13 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 **Description:** Build `ResetDialog` as a native `<dialog>`, opened by the ⚙ button on the garden. It asks "Wyczyścić cały ogród?". **Wyczyść** is enabled only after the parent types `USUŃ` (case-insensitive). **Anuluj** and Esc close the dialog, and focus returns to ⚙.
 
 **Acceptance criteria:**
-- [ ] Wyczyść stays disabled until the input matches `usuń`/`USUŃ`. Confirming resets the store, and the garden shows the fresh state.
-- [ ] Closing in any way returns focus to ⚙. The dialog has an accessible name.
-- [ ] axe reports 0 violations with the dialog open
+- [x] Wyczyść stays disabled until the input matches `usuń`/`USUŃ`. Confirming resets the store, and the garden shows the fresh state.
+- [x] Closing in any way returns focus to ⚙. The dialog has an accessible name.
+- [x] axe reports 0 violations with the dialog open
 
 **Verification:**
-- [ ] `npx ng test --watch=false` passes
-- [ ] Manual: keyboard only — open the dialog, type the word, reset; and open, then Esc
+- [x] `npx ng test --watch=false` passes
+- [x] Manual: keyboard only — open the dialog, type the word, reset; and open, then Esc
 
 **Dependencies:** T4, T5
 **Files:** `src/app/garden/reset-dialog.ts`, `reset-dialog.spec.ts`, `garden-page.ts`

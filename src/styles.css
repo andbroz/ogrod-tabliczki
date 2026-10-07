@@ -15,6 +15,7 @@
   --focus: #1a4fd6;
   --wrong: #9a3b00;
   --bubble-hover: #f1e6cc;
+  --danger: #b3261e;
 
   /* Breathing room around the game: ~16 px on phones up to ~48 px on desktops,
      plus the device safe areas (notch, rounded corners, home bar). */

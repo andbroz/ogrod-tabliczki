@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { expectNoAxeViolations } from '../../testing/axe';
+import { polyfillDialog } from '../../testing/dialog';
 import { ProgressStore, STORAGE } from '../progress/progress-store';
 import { GardenPage } from './garden-page';
 
 async function setup() {
+  polyfillDialog();
   TestBed.configureTestingModule({
     providers: [provideRouter([]), { provide: STORAGE, useValue: null }],
   });
@@ -37,6 +39,15 @@ describe('GardenPage', () => {
     expect(play?.getAttribute('href')).toBe('/graj');
     expect(play?.textContent).toContain('Graj');
     expect(document.activeElement).toBe(play);
+  });
+
+  it('has a reset button that opens the reset dialog', async () => {
+    const { fixture, el } = await setup();
+    const reset = el.querySelector<HTMLButtonElement>('button.reset')!;
+    expect(reset.getAttribute('aria-label')).toBe('Wyczyść ogród');
+    reset.click();
+    await fixture.whenStable();
+    expect(el.querySelector('app-reset-dialog dialog')?.hasAttribute('open')).toBe(true);
   });
 
   it('has no accessibility violations', async () => {
