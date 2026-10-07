@@ -6,5 +6,10 @@ export const routes: Routes = [
     title: 'Ogród Tabliczki',
     loadComponent: () => import('./garden/garden-page').then((m) => m.GardenPage),
   },
+  {
+    path: 'graj',
+    title: 'Graj – Ogród Tabliczki',
+    loadComponent: () => import('./round/round-page').then((m) => m.RoundPage),
+  },
   { path: '**', redirectTo: '' },
 ];

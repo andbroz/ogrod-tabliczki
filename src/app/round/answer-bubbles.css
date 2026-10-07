@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.bubble {
+  width: 5.5rem;
+  height: 5.5rem;
+  border: 3px solid var(--text);
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--text);
+  font: inherit;
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bubble:hover {
+  background: var(--bubble-hover);
+}

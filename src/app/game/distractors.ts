@@ -28,3 +28,8 @@ export function distractors(a: number, b: number, random: Random): readonly [num
   }
   return [pool[0], pool[1]];
 }
+
+/** The correct product and its two distractors, in random order. */
+export function answerOptions(a: number, b: number, random: Random): readonly number[] {
+  return shuffle([a * b, ...distractors(a, b, random)], random);
+}

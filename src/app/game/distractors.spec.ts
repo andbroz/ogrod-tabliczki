@@ -1,4 +1,4 @@
-import { distractors } from './distractors';
+import { answerOptions, distractors } from './distractors';
 import { FACTS } from './facts';
 import { seededRandom } from '../../testing/seeded-random';
 
@@ -33,5 +33,23 @@ describe('distractors', () => {
       expect(values).toContain(2);
       expect([0, 2, 3]).toEqual(expect.arrayContaining([...values]));
     }
+  });
+});
+
+describe('answerOptions', () => {
+  it('returns the product and its 2 distractors in varying order', () => {
+    const random = seededRandom(4);
+    const firsts = new Set<number>();
+    for (let run = 0; run < 50; run++) {
+      const options = answerOptions(7, 8, random);
+      expect(options).toHaveLength(3);
+      expect(options).toContain(56);
+      firsts.add(options[0]);
+    }
+    expect(firsts.size).toBeGreaterThan(1);
+  });
+
+  it('offers 0 among the options for a ×0 problem', () => {
+    expect(answerOptions(6, 0, seededRandom(5))).toContain(0);
   });
 });

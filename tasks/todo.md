@@ -139,13 +139,13 @@ The store saves to `localStorage` key `ogrod-tabliczki:v1` after every change.
 For this task, **every** problem is answered with bubbles. Answers are recorded through the store. A correct answer shows "Brawo!" and moves on automatically after the delay constant. A wrong answer shows the correct answer and a **Dalej** button; the dot array comes in T9. After problem 10 the page goes back to the garden; the summary comes in T10. The ✕ button returns to the garden at any time.
 
 **Acceptance criteria:**
-- [ ] Tapping the correct bubble records the answer, announces "Dobrze!" (live region) and advances after the delay. Tapping a wrong one records it and waits for Dalej.
-- [ ] Focus moves to the first bubble on each new problem. The bubbles are ≥ 64 px.
-- [ ] Progress persists after each answer: reloading mid-round keeps the earlier answers.
+- [x] Tapping the correct bubble records the answer, announces "Dobrze!" (live region) and advances after the delay. Tapping a wrong one records it and waits for Dalej.
+- [x] Focus moves to the first bubble on each new problem. The bubbles are ≥ 64 px.
+- [x] Progress persists after each answer: reloading mid-round keeps the earlier answers.
 
 **Verification:**
-- [ ] `npx ng test --watch=false`: the round page and bubbles specs pass (fake timers), and the axe helper reports 0 violations
-- [ ] Manual (browser MCP): play a full round; the garden updates; no console errors
+- [x] `npx ng test --watch=false`: the round page and bubbles specs pass (fake timers), and the axe helper reports 0 violations
+- [x] Manual (browser MCP): play a full round; the garden updates; no console errors
 
 **Dependencies:** T4, T5, T6
 **Files:** `src/app/round/round-page.ts`, `round-page.spec.ts`, `answer-bubbles.ts`, `answer-bubbles.spec.ts`, `src/app/app.routes.ts`
@@ -270,6 +270,7 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 - [ ] AXE (in the browser) reports 0 violations on the garden, the round (question, correct and wrong states), the summary and the reset dialog. Lighthouse accessibility is 100.
 - [ ] A keyboard-only playthrough of a full loop works. No horizontal scroll at 360 px. Tablet portrait and landscape are usable.
 - [ ] All 12 success criteria in the spec are checked off, and `game/` coverage is ≥ 90%
+- [ ] Focus isn't lost while the "Brawo!" feedback is shown (noticed in T7: the bubbles are removed, so focus falls to `body` for ~1.2 s)
 
 **Verification:**
 - [ ] `npx ng test --watch=false --coverage`, `npx ng lint` and `npm run build`
