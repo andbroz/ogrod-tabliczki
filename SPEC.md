@@ -187,7 +187,7 @@ Unit + coverage:   npx ng test --watch=false --coverage
 Format check:      npx prettier --check .
 Format fix:        npx prettier --write .
 Offline/PWA check: serve dist/tabliczka-mnozenia-game/browser with a static server, then
-                   reload with the network disabled in DevTools (static server: see Open Questions)
+                   reload with the network disabled in DevTools (static server: `npx http-server`)
 ```
 
 ## Project Structure
@@ -287,7 +287,7 @@ export class AnswerBubbles {
   - garden: 100 cells, labels, locked cells.
   - reset dialog: the `USUŃ` gate.
 - **Accessibility:**
-  - Automated: axe-core run against each screen (see Open Questions).
+  - Automated: axe-core run against each screen (added as a dev dependency).
   - At runtime: a Lighthouse accessibility audit through the Chrome DevTools MCP (target 100).
   - Manual: keyboard-only pass and a 360 px viewport check.
 - **Runtime/e2e:** for each slice, use the Playwright or Chrome DevTools MCP to play one full round, take screenshots of the garden and the round, and check the console has no errors.
@@ -314,6 +314,8 @@ export class AnswerBubbles {
 
 ## Success Criteria
 
+All 12 were verified in Task 14 (offline on the real tablet in Task 15) and signed off by the owner on 2026-10-07; see [tasks/todo.md](tasks/todo.md).
+
 1. After a reset, the garden shows 100 cells: 36 cells for the 19 stage-1 facts as seeds, and every other cell as covered soil. The counter reads "🌸 0 / 55".
 2. A round always has exactly 10 problems, built according to the round composition rules (this is checked by unit tests).
 3. A seed fact is answered with 3 bubbles. A sprout or flower fact is answered on the number pad, and both the on-screen keys and the physical keyboard work.
@@ -327,11 +329,11 @@ export class AnswerBubbles {
 11. There's no horizontal scrolling at 360 px. Answer bubbles and number pad keys are ≥ 64 px. On desktop (e.g. 1440×900) the UI is visibly larger than on a phone, and the garden and round screens fit without scrolling at 1024×768 and larger.
 12. `npx ng test --watch=false` passes, `src/app/game/` has ≥ 90% coverage, and `npm run build` succeeds within the budgets.
 
-## Open Questions
+## Resolved Questions
 
-1. **Dependencies to approve** (all dev-only, none shipped to the child's device):
-   - `axe-core` for automated AXE checks in component tests. _Recommended._
-   - A static server for testing the offline/PWA build, e.g. `http-server` run via `npx` (nothing is installed). _Recommended._
-   - `angular-eslint` for linting, including its template accessibility rules. _Optional; my recommendation is to add it._
-   - `@playwright/test` for committed e2e tests. _Optional: browser checks through the Playwright MCP may be enough for this MVP._
-2. **Tuning defaults:** are the round weights (3/3/1), the ≤ 3 new facts per round, the ×0 frequency and the ~1.2 s auto-advance OK as starting values? They're all constants and easy to change after watching your child play.
+1. **Dependencies** (all dev-only, none shipped to the child's device):
+   - `axe-core` for automated AXE checks in component tests. _Added._
+   - A static server for testing the offline/PWA build: `http-server` run via `npx`. _Nothing installed._
+   - `angular-eslint` for linting, including its template accessibility rules. _Added._
+   - `@playwright/test` for committed e2e tests. _Not added: checks run through the Playwright and Chrome DevTools MCP tools._
+2. **Tuning defaults:** the round weights (3/3/1), the ≤ 3 new facts per round, the ×0 frequency, the 80% unlock threshold and the 1.2 s auto-advance stay as the starting values. The child playtest (2026-10-07) raised no rule changes. They're all constants in `src/app/game/facts.ts`, to revisit after longer real use.

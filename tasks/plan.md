@@ -55,7 +55,7 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 
 - [x] `npx ng test --watch=false`, `npx ng lint` and `npm run build` are all green
 - [x] The app loads in the browser with no console errors
-- [ ] Human review
+- [x] Human review (covered by the owner's sign-off of Checkpoint C, 2026-10-07)
 
 ### Phase 2: Playable Loop
 
@@ -75,7 +75,8 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Success criteria 1–7 from the spec are met
 - [x] **Child playtest:** hand over without explaining anything and observe (assumptions from the idea doc)
   - 2026-10-07: the kids played without questions and chose **Jeszcze raz** on their own. Feedback: the desktop view is too small → responsive scaling (Task 10a).
-- [ ] Human review: adjust the tuning constants or rules before polishing
+- [x] Human review: adjust the tuning constants or rules before polishing
+  - The playtest raised no rule changes, so the starting values in `src/app/game/facts.ts` stay: weights 3/3/1, ≤ 3 new facts per round, ×0 mastery 3 then 1/3 of rounds, 80% unlock threshold, 1.2 s auto-advance. Revisit after longer real use.
 
 ### Phase 3: Polish and Ship-Readiness
 
@@ -84,12 +85,12 @@ T1 Clean base (no SSR, strict TS, lang=pl, routes)
 - [x] Task 12: SVG garden art and grow animation
 - [x] Task 13: PWA offline support
 - [x] Task 14: Final accessibility and responsive pass
-- [x] Task 15: Publish on GitHub Pages (live; real-tablet check pending)
+- [x] Task 15: Publish on GitHub Pages (live; real-tablet check done 2026-10-07)
 
 ### Checkpoint C: Complete
 
-- [ ] All 12 success criteria in the spec are met
-- [ ] Human review
+- [x] All 12 success criteria in the spec are met (verified in Task 14; offline on the real tablet in Task 15)
+- [x] Human review (2026-10-07: approved by the owner)
 
 ## Parallelization
 

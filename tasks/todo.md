@@ -76,7 +76,7 @@ Standard verification commands:
 ### ◆ Checkpoint A: Foundation
 
 - [x] Tests, lint and build are green; the app loads with no console errors
-- [ ] Human review
+- [x] Human review (covered by the owner's sign-off of Checkpoint C, 2026-10-07)
 
 ---
 
@@ -286,7 +286,8 @@ For ×0, the dot array shows `n` empty rows and the label "0 kropek".
 - [x] Decide how the tablet opens the app (plan.md, Open Question 1): installed from GitHub Pages to the home screen (Task 15)
 - [x] Child playtest: no explanation, observe silently, note where they get stuck
   - 2026-10-07: the kids played without questions and chose **Jeszcze raz** on their own. Feedback: the desktop view is too small → responsive scaling (Task 10a).
-- [ ] Human review: adjust the constants or rules (spec update first) before Phase 3
+- [x] Human review: adjust the constants or rules (spec update first) before Phase 3
+  - The playtest raised no rule changes, so the starting values in `src/app/game/facts.ts` stay (see SPEC.md, Resolved Questions). Revisit after longer real use.
 
 ---
 
