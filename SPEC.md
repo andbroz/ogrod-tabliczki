@@ -3,6 +3,7 @@
 Source idea: [docs/ideas/ogrod-tabliczki.md](docs/ideas/ogrod-tabliczki.md)
 
 ## Assumptions
+
 1. One child, one device; progress is stored only in that browser's `localStorage`.
 2. The app is client-only: SSR, Express and hydration are removed from the scaffold.
 3. Offline support uses the Angular service worker (`@angular/pwa`); it is active only in production builds.
@@ -12,16 +13,18 @@ Source idea: [docs/ideas/ogrod-tabliczki.md](docs/ideas/ogrod-tabliczki.md)
 7. The SVG art is drawn by hand for this project; no external assets, fonts or CDNs.
 
 ## Objective
+
 A garden-themed game that helps a **7–9-year-old weak reader** practise the multiplication table **1–10 × 1–10**, plus the rule "× 0 = 0", alone and happily.
 
 **Success:** the child returns to it voluntarily and the garden fills up with flowers.
 
 ### User stories
+
 - **US-1** As the child, I open the app and immediately see my garden (100 cells) and how many flowers I have, without reading anything.
 - **US-2** As the child, I press one big **Graj** button and get a short round of 10 problems.
 - **US-3** As the child, I answer a new fact by tapping one of 3 big answer bubbles.
 - **US-4** As the child, I answer a fact I already know a bit by typing on a big number pad (or a keyboard).
-- **US-5** As the child, when I get it wrong I see dots that show *why*, plus the right answer, and I continue when I'm ready.
+- **US-5** As the child, when I get it wrong I see dots that show _why_, plus the right answer, and I continue when I'm ready.
 - **US-6** As the child, at the end of a round I see which plants grew, and when new garden beds open up.
 - **US-7** As the parent, I can reset the garden, and the child can't do it by accident.
 - **US-8** As the parent, the app works offline after the first visit and sends no data anywhere.
@@ -29,31 +32,34 @@ A garden-themed game that helps a **7–9-year-old weak reader** practise the mu
 ## Domain Rules
 
 ### Facts
+
 - A **fact** is an unordered pair `{a, b}` with `1 ≤ a ≤ b ≤ 10`. That gives **55 facts**. Key format: `"a×b"` with `a ≤ b` (e.g. `"7×8"`).
 - In the garden, the cells for row `r`, column `c` and row `c`, column `r` show the **same** fact.
 - In a round, a fact is shown as `a × b` or `b × a`, chosen at random.
 
 ### Growth (per fact)
+
 State: `level ∈ {seed, sprout, flower}` and `streak` (consecutive correct answers), both starting at `seed` / `0`.
 
-| Event | Effect |
-|---|---|
-| Correct | `streak += 1`; if `streak ≥ 2` → `flower`; else if `seed` → `sprout` |
-| Wrong | `streak = 0`; level drops one step (`flower → sprout`, `sprout → seed`, `seed` stays) |
+| Event   | Effect                                                                                |
+| ------- | ------------------------------------------------------------------------------------- |
+| Correct | `streak += 1`; if `streak ≥ 2` → `flower`; else if `seed` → `sprout`                  |
+| Wrong   | `streak = 0`; level drops one step (`flower → sprout`, `sprout → seed`, `seed` stays) |
 
 **Input mode** depends on the level when the problem is shown: `seed` → **answer bubbles**; `sprout`/`flower` → **number pad**.
 
 Because of these rules, a flower always needs 2 correct answers in a row, and the second one is always typed. Nothing changes when the child doesn't play.
 
 ### Stages (unlocking)
+
 A fact belongs to the first stage that contains **either** of its factors.
 
-| Stage | Tables | New facts |
-|---|---|---|
-| 1 | ×1, ×2 | 19 |
-| 2 | ×5, ×10 | 15 |
-| 3 | ×3, ×4 | 11 |
-| 4 | ×6, ×7, ×8, ×9 | 10 |
+| Stage | Tables         | New facts |
+| ----- | -------------- | --------- |
+| 1     | ×1, ×2         | 19        |
+| 2     | ×5, ×10        | 15        |
+| 3     | ×3, ×4         | 11        |
+| 4     | ×6, ×7, ×8, ×9 | 10        |
 
 - Stage 1 is unlocked at the start.
 - The next stage unlocks **at the end of a round** when **≥ 80%** of the facts in the unlocked stages are `sprout` or `flower`.
@@ -62,6 +68,7 @@ A fact belongs to the first stage that contains **either** of its factors.
 - The stage table and the threshold are constants in one file.
 
 ### Round composition (10 problems)
+
 1. Candidates are the facts in the unlocked stages.
 2. Weighted random pick, with weights `seed` = 3, `sprout` = 3, `flower` = 1, so flowers come back as review.
 3. A round introduces at most **3 never-attempted facts** while other candidates remain. This is a soft limit: when only never-attempted facts are left (e.g. the very first round), more are added so the round still has 10 problems.
@@ -73,12 +80,14 @@ A fact belongs to the first stage that contains **either** of its factors.
    - It doesn't affect the garden.
 
 ### Answer bubbles (seed facts)
+
 - Three bubbles: the correct product and 2 distractors, in shuffled order.
 - Distractors are picked from the neighbouring products `a×(b±1)` and `(a±1)×b`, with both factors staying in 1–10.
 - If there aren't enough of those, `product ± 1` and `± 2` are used instead.
 - Distractors are always distinct, `≥ 0`, and never equal to the correct product.
 
 ### Number pad (sprout/flower facts and ×0)
+
 - On-screen keys: `0`–`9`, `⌫` (delete) and `✓` (confirm). Up to 3 digits.
 - `✓` is disabled while the field is empty.
 - Physical keyboard: digits, `Backspace` and `Enter` work the same way.
@@ -88,6 +97,7 @@ A fact belongs to the first stage that contains **either** of its factors.
 Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route redirects to `''`.
 
 ### Garden (`''`)
+
 - A semantic `<table>` with column and row headers 1–10 and 100 cells.
 - Each cell shows a seed, sprout, flower or covered-soil image through a CSS `background-image` class.
 - The cells are **not focusable**; each has a visually hidden name, e.g. "7 × 8, kwiatek" or "7 × 8, zakryte".
@@ -97,6 +107,7 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - The garden fits in a 360 px wide viewport without horizontal scrolling.
 
 ### Round (`'graj'`)
+
 - The problem is shown in large digits, e.g. `7 × 8 = ?`.
 - Progress is shown as 10 dots (done / current / remaining), with an accessible "Zadanie 3 z 10".
 - **Correct answer:** a check mark and "Brawo!", plus a grow animation if the level went up. The game moves on automatically after about 1.2 s.
@@ -109,16 +120,19 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - **Leaving:** a small ✕ button leaves the round and returns to the garden. Answers already given are kept; the unlock check is skipped.
 
 ### Round summary (inside the round route)
+
 - The plants that grew in this round, as icons and counts (e.g. "+3 🌸", "+2 🌿"). When nothing grew, a short encouragement instead: "🌱 Próbuj dalej!".
 - If a stage unlocked: "Nowe grządki!" with the new tables (e.g. "×3 ×4").
 - Buttons: **▶ Jeszcze raz** (a new round, focused by default) and **🌱 Ogród**.
 
 ### Reset dialog
+
 - A native `<dialog>` that asks "Wyczyścić cały ogród?".
 - **Wyczyść** is enabled only after the parent types `USUŃ` into a text field (case-insensitive). This works as a gate a weak reader can't pass by accident, and it's fully keyboard and screen-reader accessible.
 - **Anuluj** and `Esc` close the dialog, and focus returns to ⚙.
 
 ### Persistence
+
 - `localStorage` key `ogrod-tabliczki:v1`, holding JSON in this shape:
   ```ts
   { version: 1, facts: Record<FactKey, { level: 'seed' | 'sprout' | 'flower'; streak: number; attempts: number }>,
@@ -129,9 +143,11 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - If `localStorage` is unavailable, the game runs in memory and doesn't crash.
 
 ### Copy (complete MVP list)
+
 `Graj`, `Jeszcze raz`, `Ogród`, `Dalej`, `Brawo!`, `Prawie!`, `Nowe grządki!`, `Próbuj dalej!`, `Zadanie N z 10`, `Wyczyścić cały ogród?`, `Wpisz USUŃ, aby potwierdzić`, `Wyczyść`, `Anuluj`, the accessible names `Wyczyść ogród` (⚙), `Wróć do ogrodu`, `Twoja odpowiedź`, `Usuń`, `Sprawdź`, plus the cell labels `nasionko` / `kiełek` / `kwiatek` / `zakryte`. Every child-facing button pairs its word with an icon.
 
 ## Non-Functional Requirements
+
 - **Accessibility:**
   - 0 AXE violations on every screen; WCAG 2.2 AA.
   - Contrast: text ≥ 4.5:1 (≥ 3:1 for large text); plant graphics and UI component boundaries ≥ 3:1 against their background.
@@ -147,11 +163,13 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - **Performance:** the production initial bundle stays within the existing budget (warning at 500 kB); each SVG plant is ≤ 4 kB.
 
 ## Hosting
+
 - Published as a static site on **GitHub Pages** (HTTPS), so the tablet can install it and play offline after the first visit.
 - Built with the repository path as the base href; a `404.html` copy of `index.html` lets deep links (e.g. `/graj`) work on Pages.
 - Publishing happens only from an explicit, confirmed push; nothing is deployed automatically without the owner's approval.
 
 ## Tech Stack
+
 - Angular 22.2: standalone components, signals, zoneless/OnPush defaults, native control flow, lazy routes. Conventions follow [CLAUDE.md](CLAUDE.md).
 - TypeScript ~6.0 with `"strict": true` and `strictTemplates` turned on (currently missing from the scaffold).
 - `@angular/service-worker` added via `ng add @angular/pwa`.
@@ -160,6 +178,7 @@ Routes are lazy-loaded: `''` → garden, `'graj'` → round. Any unknown route r
 - Removed: `@angular/ssr`, `@angular/platform-server`, `express`, `@types/express`, together with the server entry files and the `angular.json` SSR options.
 
 ## Commands
+
 ```
 Dev server:        npm start                         # ng serve, http://localhost:4200
 Build (prod):      npm run build                     # dist/tabliczka-mnozenia-game/browser
@@ -172,6 +191,7 @@ Offline/PWA check: serve dist/tabliczka-mnozenia-game/browser with a static serv
 ```
 
 ## Project Structure
+
 ```
 src/app/
   game/                     → pure domain logic, no Angular imports
@@ -204,6 +224,7 @@ tasks/                      → plan.md, todo.md (next phase)
 ```
 
 ## Code Style
+
 Domain logic is pure, typed and free of Angular dependencies. Components are small, use signals, and keep inline templates when they're short.
 
 ```ts
@@ -244,6 +265,7 @@ export class AnswerBubbles {
 ```
 
 **Conventions:**
+
 - Files use kebab-case and classes use PascalCase, with no `Component` suffix (as in the scaffold's `App`).
 - No `any`; prefer `readonly` data and `computed()` for derived state.
 - `update`/`set` only, never `mutate`.
@@ -251,6 +273,7 @@ export class AnswerBubbles {
 - `NgOptimizedImage` doesn't apply: all images are CSS backgrounds.
 
 ## Testing Strategy
+
 - **Domain logic (`src/app/game/`):** Vitest unit tests. Coverage target: **≥ 90% lines and branches**.
   - `growth`: every transition in the growth table.
   - `facts`: 55 facts and the stage counts 19/15/11/10.
@@ -271,6 +294,7 @@ export class AnswerBubbles {
 - **Offline:** production build, load once, switch to offline, reload, and play a round.
 
 ## Boundaries
+
 - **Always:**
   - Follow CLAUDE.md conventions.
   - Keep game rules in `src/app/game/` as pure functions with tests.
@@ -289,6 +313,7 @@ export class AnswerBubbles {
   - Commit secrets.
 
 ## Success Criteria
+
 1. After a reset, the garden shows 100 cells: 36 cells for the 19 stage-1 facts as seeds, and every other cell as covered soil. The counter reads "🌸 0 / 55".
 2. A round always has exactly 10 problems, built according to the round composition rules (this is checked by unit tests).
 3. A seed fact is answered with 3 bubbles. A sprout or flower fact is answered on the number pad, and both the on-screen keys and the physical keyboard work.
@@ -303,9 +328,10 @@ export class AnswerBubbles {
 12. `npx ng test --watch=false` passes, `src/app/game/` has ≥ 90% coverage, and `npm run build` succeeds within the budgets.
 
 ## Open Questions
+
 1. **Dependencies to approve** (all dev-only, none shipped to the child's device):
-   - `axe-core` for automated AXE checks in component tests. *Recommended.*
-   - A static server for testing the offline/PWA build, e.g. `http-server` run via `npx` (nothing is installed). *Recommended.*
-   - `angular-eslint` for linting, including its template accessibility rules. *Optional; my recommendation is to add it.*
-   - `@playwright/test` for committed e2e tests. *Optional: browser checks through the Playwright MCP may be enough for this MVP.*
+   - `axe-core` for automated AXE checks in component tests. _Recommended._
+   - A static server for testing the offline/PWA build, e.g. `http-server` run via `npx` (nothing is installed). _Recommended._
+   - `angular-eslint` for linting, including its template accessibility rules. _Optional; my recommendation is to add it._
+   - `@playwright/test` for committed e2e tests. _Optional: browser checks through the Playwright MCP may be enough for this MVP._
 2. **Tuning defaults:** are the round weights (3/3/1), the ≤ 3 new facts per round, the ×0 frequency and the ~1.2 s auto-advance OK as starting values? They're all constants and easy to change after watching your child play.

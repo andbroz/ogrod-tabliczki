@@ -1,6 +1,6 @@
 # Ogród Tabliczki
 
-A garden game that helps children aged 7–9 learn the multiplication table up to 100 (*tabliczka mnożenia*). The interface is in Polish and designed for children who are still learning to read: icons, digits and colours do most of the talking.
+A garden game that helps children aged 7–9 learn the multiplication table up to 100 (_tabliczka mnożenia_). The interface is in Polish and designed for children who are still learning to read: icons, digits and colours do most of the talking.
 
 **Play:** https://andbroz.github.io/ogrod-tabliczki/
 
@@ -22,14 +22,14 @@ A garden game that helps children aged 7–9 learn the multiplication table up t
 
 Requires Node.js 24.
 
-| Task | Command |
-|---|---|
-| Install | `npm ci` |
-| Dev server (http://localhost:4200) | `npm start` |
-| Unit tests | `npx ng test --watch=false` |
-| Tests with coverage | `npx ng test --watch=false --coverage` |
-| Lint | `npx ng lint` |
-| Production build | `npm run build` |
+| Task                               | Command                                |
+| ---------------------------------- | -------------------------------------- |
+| Install                            | `npm ci`                               |
+| Dev server (http://localhost:4200) | `npm start`                            |
+| Unit tests                         | `npx ng test --watch=false`            |
+| Tests with coverage                | `npx ng test --watch=false --coverage` |
+| Lint                               | `npx ng lint`                          |
+| Production build                   | `npm run build`                        |
 
 The service worker is only active in production builds. To try offline mode locally, build and serve `dist/tabliczka-mnozenia-game/browser` with a static server (e.g. `npx http-server`), load the page once, then go offline.
 
